@@ -7,7 +7,7 @@ intents = discord.Intents().all()
 bot = commands.Bot(command_prefix='!', intents=intents)
 
 #token allows to sign in to the bot account
-TOKEN = 'NzU3MzIzNDkxNTUxNzM5OTY0.GcSMk8.t3qxEoP0UiBnHtaVqtoPxoKuJEEbDpMosyUB8M'
+TOKEN = 'TOKEN HERE'
 
 #list of reaction roles data
 bot.reaction_roles = []
