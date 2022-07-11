@@ -94,3 +94,5 @@ async def react_role(ctx, role: discord.Role=None, msg=None, emoji=None):
 @bot.event
 async def on_member_join(member):
     await member.send(bot.join_message)
+
+bot.run(TOKEN)
