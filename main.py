@@ -1,13 +1,14 @@
 import aiofiles
 import discord
 from discord.ext import commands
+import os
 
 #bot intents to allow for reaction roles
 intents = discord.Intents().all()
 bot = commands.Bot(command_prefix='!', intents=intents)
 
 #token allows to sign in to the bot account
-TOKEN = 'NzU3MzIzNDkxNTUxNzM5OTY0.Ga58ok.Fld12BrMlNwyWnPDOKMWtt_g187A51A9DtC_rc'
+TOKEN = os.getenviron['BOT_TOKEN']
 
 #list of reaction roles data
 bot.reaction_roles = []
