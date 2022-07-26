@@ -2,6 +2,17 @@ import aiofiles
 import discord
 from discord.ext import commands
 import os
+import sys
+import socket
+
+try:
+    s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+    s.bind('\0postconnect_gateway_notify_lock')
+except socket.error as e:
+    error_code = e.args[0]
+    error_string = e.args[1]
+    print("Process already running (%d:%s ). Exiting" % (error_code, error_string))
+    sys.exit(0)
 
 #bot intents to allow for reaction roles
 intents = discord.Intents().all()
@@ -94,5 +105,11 @@ async def react_role(ctx, role: discord.Role=None, msg=None, emoji=None):
 @bot.event
 async def on_member_join(member):
     await member.send(bot.join_message)
+
+#-----------------------TEST COMMAND---------------------#
+
+@bot.command()
+async def test(ctx):
+    await ctx.send("Operational")
 
 bot.run(TOKEN)
