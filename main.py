@@ -19,7 +19,8 @@ intents = discord.Intents().all()
 bot = commands.Bot(command_prefix='!', intents=intents)
 
 #token allows to sign in to the bot account
-TOKEN = os.environ.get('BOT_TOKEN')
+#TOKEN = os.environ.get('BOT_TOKEN')
+TOKEN = "MTAwMTk5MjAyOTg2NzM2NDQ4NQ.GeF_kt.Ud3Hudo1TrDkyBCm48ekMZvfdfj7nbuAhWzY4o"
 
 #list of reaction roles data
 bot.reaction_roles = []
@@ -106,10 +107,27 @@ async def react_role(ctx, role: discord.Role=None, msg=None, emoji=None):
 async def on_member_join(member):
     await member.send(bot.join_message)
 
+#---------------------ACTIVITY CHECK---------------------#
+
+@bot.command()
+async def activity(ctx):
+    inactive = []
+    for member in ctx.guild.members:
+        if discord.utils.get(ctx.guild.roles, name="EU") not in member.roles:
+            if discord.utils.get(ctx.guild.roles, name="US") not in member.roles:
+                inactive.append(member.name)
+    if not inactive:
+        await ctx.send("No inactive users")
+    else:
+        await ctx.send("\n".join(inactive))
+    await ctx.message.delete()
+
+
 #-----------------------TEST COMMAND---------------------#
 
 @bot.command()
 async def test(ctx):
     await ctx.send("Operational")
+    await ctx.message.delete()
 
 bot.run(TOKEN)
