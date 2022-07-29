@@ -1,0 +1,15 @@
+Mush Bot is designed to help streamline the experience of both staff and members in order to provide an optimal experience.
+
+__Commands:__
+```
+!srb - show timings of SRB events
+
+__diagnostic__
+These commands are for ensuring the bot in working
+!test - tells you if the bot is operational
+
+__staff only__
+These commands are limeted to staff members only
+!react_role - creates a reaction role. !react_role [role] [message] [emoji]
+!activity - show people who haven't listened to pings
+```

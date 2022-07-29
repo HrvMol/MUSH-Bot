@@ -1,3 +1,4 @@
+from operator import mod
 import aiofiles
 import discord
 from discord.ext import commands
@@ -5,26 +6,25 @@ import os
 import sys
 import socket
 
-try:
-    s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-    s.bind('\0postconnect_gateway_notify_lock')
-except socket.error as e:
-    error_code = e.args[0]
-    error_string = e.args[1]
-    print("Process already running (%d:%s ). Exiting" % (error_code, error_string))
-    sys.exit(0)
+if sys.platform == "linux":
+    try:
+        s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+        s.bind('\0postconnect_gateway_notify_lock')
+    except socket.error as e:
+        error_code = e.args[0]
+        error_string = e.args[1]
+        print("Process already running (%d:%s ). Exiting" % (error_code, error_string))
+        sys.exit(0)
 
 #bot intents to allow for reaction roles
 intents = discord.Intents().all()
 bot = commands.Bot(command_prefix='!', intents=intents)
 
 #token allows to sign in to the bot account
-#TOKEN = os.environ.get('BOT_TOKEN')
-TOKEN = "MTAwMTk5MjAyOTg2NzM2NDQ4NQ.GeF_kt.Ud3Hudo1TrDkyBCm48ekMZvfdfj7nbuAhWzY4o"
+TOKEN = os.environ.get('BOT_TOKEN')
 
 #list of reaction roles data
 bot.reaction_roles = []
-
 bot.join_message = ''
 
 #on boot function
@@ -49,6 +49,16 @@ async def on_ready():
     async with aiofiles.open("join_message.txt", mode="r") as file:
         bot.join_message = await file.read()
 
+    try:
+        async with aiofiles.open("srb_timings.txt", mode="r") as file:
+            bot.srb_timings = await file.read()
+    except: pass
+
+    try:
+        async with aiofiles.open("help.txt", mode="r") as file:
+            bot.help = await file.read()
+    except: pass
+
     print("logged in and ready")
 
 #---------------------REACTION ROLES---------------------#
@@ -70,8 +80,7 @@ async def on_raw_reaction_add(payload):
 @bot.event
 async def on_raw_reaction_remove(payload):
     #check for if user reacting is bot so it can be ignored
-    if payload.member == bot.user:
-        return
+    if payload.member == bot.user: return
     
     #checks through list to see if reaction is on one of the reaction role messages
     for role_id, msg_id, emoji in bot.reaction_roles:
@@ -105,7 +114,8 @@ async def react_role(ctx, role: discord.Role=None, msg=None, emoji=None):
 
 @bot.event
 async def on_member_join(member):
-    await member.send(bot.join_message)
+    join_channel = bot.get_channel(1002658934047383674)
+    await join_channel.send(f'{member.mention}\n {bot.join_message}')
 
 #---------------------ACTIVITY CHECK---------------------#
 
@@ -113,6 +123,8 @@ async def on_member_join(member):
 async def activity(ctx):
     inactive = []
     for member in ctx.guild.members:
+        if member == bot.user: return
+
         if discord.utils.get(ctx.guild.roles, name="EU") not in member.roles:
             if discord.utils.get(ctx.guild.roles, name="US") not in member.roles:
                 inactive.append(member.name)
@@ -122,8 +134,14 @@ async def activity(ctx):
         await ctx.send("\n".join(inactive))
     await ctx.message.delete()
 
+#-----------------------SRB TIMINGS----------------------#
 
-#-----------------------TEST COMMAND---------------------#
+@bot.command()
+async def srb(ctx):
+    await ctx.send(bot.srb_timings)
+    await ctx.message.delete()
+
+#----------------------TEST COMMAND----------------------#
 
 @bot.command()
 async def test(ctx):
