@@ -16,6 +16,9 @@ if sys.platform == "linux":
         error_string = e.args[1]
         print("Process already running (%d:%s ). Exiting" % (error_code, error_string))
         sys.exit(0)
+    
+if "mush-bot" not in os.getcwd().lower():
+    os.chdir(os.getcwd()+"/mush-bot")
 
 #bot intents to allow for reaction roles
 intents = discord.Intents().all()
@@ -148,9 +151,7 @@ async def srb(ctx):
 async def on_message(ctx):
     await bot.process_commands(ctx)
     if ctx.author != bot.user:
-
-        print(directory)
-        await ctx.channel.send(f"dir: {os.getcwd()}, {sys.path[0]}")
+        await ctx.channel.send(f"dir: {os.getcwd()}")
 
         if random.randint(0, 1000) == 1:
             await ctx.channel.send("fuck you")
