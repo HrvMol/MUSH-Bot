@@ -5,6 +5,7 @@ from discord.ext import commands
 import os
 import sys
 import socket
+import random
 
 if sys.platform == "linux":
     try:
@@ -139,6 +140,20 @@ async def activity(ctx):
 @bot.command()
 async def srb(ctx):
     await ctx.send(bot.srb_timings)
+    await ctx.message.delete()
+
+#----------------------EASTER EGGS-----------------------#
+
+@bot.event
+async def on_message(ctx):
+    await bot.process_commands(ctx)
+    if ctx.author != bot.user:
+        if random.randint(0, 1000) == 1:
+            await ctx.channel.send("fuck you")
+            
+@bot.command()
+async def best(ctx):
+    await ctx.channel.send("back Boris https://tinyurl.com/5yrzz5x6")
     await ctx.message.delete()
 
 #----------------------TEST COMMAND----------------------#
