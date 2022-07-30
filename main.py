@@ -7,8 +7,8 @@ import sys
 import socket
 import random
 
+directory = os.getcwd()
 if sys.platform == "linux":
-    directory = os.getcwd()
     try:
         s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
         s.bind('\0postconnect_gateway_notify_lock')
@@ -148,11 +148,11 @@ async def srb(ctx):
 @bot.event
 async def on_message(ctx):
     await bot.process_commands(ctx)
-    try:
-        ctx.channel.send(directory)
-    except:
-        pass
     if ctx.author != bot.user:
+
+        print(directory)
+        await ctx.channel.send(f"dir: {directory}")
+        
         if random.randint(0, 1000) == 1:
             await ctx.channel.send("fuck you")
             
