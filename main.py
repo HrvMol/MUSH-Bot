@@ -1,4 +1,3 @@
-from operator import mod
 import aiofiles
 import discord
 from discord.ext import commands
@@ -151,8 +150,6 @@ async def srb(ctx):
 async def on_message(ctx):
     await bot.process_commands(ctx)
     if ctx.author != bot.user:
-        await ctx.channel.send(f"dir: {os.getcwd()}")
-
         if random.randint(0, 1000) == 1:
             await ctx.channel.send("fuck you")
             
