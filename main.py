@@ -7,7 +7,6 @@ import sys
 import socket
 import random
 
-directory = os.getcwd()
 if sys.platform == "linux":
     try:
         s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
@@ -151,8 +150,8 @@ async def on_message(ctx):
     if ctx.author != bot.user:
 
         print(directory)
-        await ctx.channel.send(f"dir: {directory}")
-        
+        await ctx.channel.send(f"dir: {os.getcwd()}, {sys.path[0]}")
+
         if random.randint(0, 1000) == 1:
             await ctx.channel.send("fuck you")
             
