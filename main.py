@@ -116,10 +116,11 @@ async def react_role(ctx, role: discord.Role=None, msg=None, emoji=None):
 
 @bot.event
 async def on_member_join(ctx):
+    #sends message in new members in mush, if test bot, then test server channel
     try:
-        join_channel = bot.get_channel(970370019701690468)
+        join_channel = bot.get_channel(970370019701690468)#new members chat in mush
     except: 
-        join_channel = bot.get_channel(1002658934047383674)
+        join_channel = bot.get_channel(1002658934047383674)#new members chat in test server
 
     await join_channel.send(f'{ctx.mention}\n {bot.join_message}')
 
@@ -128,28 +129,6 @@ async def on_member_join(ctx):
 async def get_guild(ctx):
     id = ctx.message.guild.id
     await ctx.send(f"guild id: {id}")
-
-#---------------------ACTIVITY CHECK---------------------#
-
-# @bot.command()
-# @commands.has_any_role("Sergeant", "Deputy Commander", "Commander", "Officer", "Discord Admin")
-# async def activity(ctx):
-#     await ctx.send("start")
-#     inactive = []
-#     for member in ctx.guild.members:
-#         await ctx.send("checking")
-#         if member == bot.user: return
-
-#         if discord.utils.get(ctx.guild.roles, name="EU") not in member.roles:
-#             if discord.utils.get(ctx.guild.roles, name="US") not in member.roles:
-#                 inactive.append(member.name)
-#                 await ctx.send("inactive")
-#     await ctx.send("printing")
-#     if not inactive:
-#         await ctx.send("No inactive users")
-#     else:
-#         await ctx.send("\n".join(inactive))
-#     await ctx.message.delete()
 
 #-----------------------SRB TIMINGS----------------------#
 
@@ -175,6 +154,21 @@ async def best(ctx):
 @bot.command()
 async def nephew(ctx):
     await ctx.channel.send("head of dinosaurs \nhttps://tinyurl.com/bdfmkupv")
+    await ctx.message.delete()
+
+@bot.command()
+async def potatoes(ctx):
+    await ctx.channel.send("POV: you voted Tories \nhttps://tinyurl.com/5drt8pa4")
+    await ctx.message.delete()
+    
+@bot.command()
+async def salty(ctx):
+    await ctx.channel.send("2 world wars, 1 world cup and one womens Euros \nhttps://tinyurl.com/2m3reh38")
+    await ctx.message.delete()
+
+@bot.command()
+async def nephew(ctx):
+    await ctx.channel.send("")
     await ctx.message.delete()
 
 #----------------------TEST COMMAND----------------------#
