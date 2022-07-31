@@ -116,10 +116,10 @@ async def react_role(ctx, role: discord.Role=None, msg=None, emoji=None):
 
 @bot.event
 async def on_member_join(ctx):
-    if ctx.message.guild.id == 993562809231233155:
-        join_channel = bot.get_channel(1002658934047383674)
-    else: 
+    try:
         join_channel = bot.get_channel(970370019701690468)
+    except: 
+        join_channel = bot.get_channel(1002658934047383674)
 
     await join_channel.send(f'{ctx.mention}\n {bot.join_message}')
 
@@ -131,21 +131,25 @@ async def get_guild(ctx):
 
 #---------------------ACTIVITY CHECK---------------------#
 
-@bot.command()
-@commands.has_any_role("Sergeant", "Deputy Commander", "Commander", "Officer", "Discord Admin")
-async def activity(ctx):
-    inactive = []
-    for member in ctx.guild.members:
-        if member == bot.user: return
+# @bot.command()
+# @commands.has_any_role("Sergeant", "Deputy Commander", "Commander", "Officer", "Discord Admin")
+# async def activity(ctx):
+#     await ctx.send("start")
+#     inactive = []
+#     for member in ctx.guild.members:
+#         await ctx.send("checking")
+#         if member == bot.user: return
 
-        if discord.utils.get(ctx.guild.roles, name="EU") not in member.roles:
-            if discord.utils.get(ctx.guild.roles, name="US") not in member.roles:
-                inactive.append(member.name)
-    if not inactive:
-        await ctx.send("No inactive users")
-    else:
-        await ctx.send("\n".join(inactive))
-    await ctx.message.delete()
+#         if discord.utils.get(ctx.guild.roles, name="EU") not in member.roles:
+#             if discord.utils.get(ctx.guild.roles, name="US") not in member.roles:
+#                 inactive.append(member.name)
+#                 await ctx.send("inactive")
+#     await ctx.send("printing")
+#     if not inactive:
+#         await ctx.send("No inactive users")
+#     else:
+#         await ctx.send("\n".join(inactive))
+#     await ctx.message.delete()
 
 #-----------------------SRB TIMINGS----------------------#
 
@@ -165,7 +169,12 @@ async def on_message(ctx):
             
 @bot.command()
 async def best(ctx):
-    await ctx.channel.send("back Boris https://tinyurl.com/5yrzz5x6")
+    await ctx.channel.send("back Boris \nhttps://tinyurl.com/5yrzz5x6")
+    await ctx.message.delete()
+
+@bot.command()
+async def nephew(ctx):
+    await ctx.channel.send("head of dinosaurs \nhttps://tinyurl.com/bdfmkupv")
     await ctx.message.delete()
 
 #----------------------TEST COMMAND----------------------#
