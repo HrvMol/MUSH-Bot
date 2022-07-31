@@ -166,6 +166,16 @@ async def salty(ctx):
     await ctx.channel.send("2 world wars, 1 world cup and one womens Euros \nhttps://tinyurl.com/2m3reh38")
     await ctx.message.delete()
 
+@bot.command()
+async def russianbias(ctx):
+    await ctx.channel.send("https://static.wikia.nocookie.net/meme/images/9/9f/RussianBias.gif/revision/latest/top-crop/width/360/height/360?cb=20190526003405")
+    await ctx.message.delete()
+
+@bot.command()
+async def scottsman(ctx):
+    await ctx.channel.send("https://cdn.discordapp.com/attachments/987513534227316789/1003431507597205584/received_272561204831416.jpeg")
+    await ctx.message.delete()
+
 #----------------------TEST COMMAND----------------------#
 
 @bot.command()
