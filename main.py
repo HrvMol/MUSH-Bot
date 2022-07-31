@@ -158,7 +158,7 @@ async def nephew(ctx):
 
 @bot.command()
 async def potatoes(ctx):
-    await ctx.channel.send("POV: you voted Tories \nhttps://tinyurl.com/5drt8pa4")
+    await ctx.channel.send("POV: you voted Tories \nhttps://tenor.com/view/boom-bomb-car-bomb-explosion-detonate-gif-15743196")
     await ctx.message.delete()
     
 @bot.command()
