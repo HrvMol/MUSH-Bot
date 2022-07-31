@@ -93,7 +93,6 @@ async def on_raw_reaction_remove(payload):
             await guild.get_member(payload.user_id).remove_roles(guild.get_role(role_id))#removes role to user that reacted
             return
 
-
 #command to set up the reaction role
 @bot.command()
 @commands.has_any_role("Sergeant", "Deputy Commander", "Commander", "Officer", "Discord Admin")
@@ -116,13 +115,24 @@ async def react_role(ctx, role: discord.Role=None, msg=None, emoji=None):
 #---------------------WELCOME MESSAGE--------------------#
 
 @bot.event
-async def on_member_join(member):
-    join_channel = bot.get_channel(1002658934047383674)
-    await join_channel.send(f'{member.mention}\n {bot.join_message}')
+async def on_member_join(ctx):
+    if ctx.message.guild.id == 993562809231233155:
+        join_channel = bot.get_channel(1002658934047383674)
+    else: 
+        join_channel = bot.get_channel(970370019701690468)
+
+    await join_channel.send(f'{ctx.mention}\n {bot.join_message}')
+
+@bot.command()
+@commands.has_any_role("Sergeant", "Deputy Commander", "Commander", "Officer", "Discord Admin")
+async def get_guild(ctx):
+    id = ctx.message.guild.id
+    await ctx.send(f"guild id: {id}")
 
 #---------------------ACTIVITY CHECK---------------------#
 
 @bot.command()
+@commands.has_any_role("Sergeant", "Deputy Commander", "Commander", "Officer", "Discord Admin")
 async def activity(ctx):
     inactive = []
     for member in ctx.guild.members:
