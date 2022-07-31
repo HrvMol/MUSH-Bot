@@ -166,11 +166,6 @@ async def salty(ctx):
     await ctx.channel.send("2 world wars, 1 world cup and one womens Euros \nhttps://tinyurl.com/2m3reh38")
     await ctx.message.delete()
 
-@bot.command()
-async def nephew(ctx):
-    await ctx.channel.send("")
-    await ctx.message.delete()
-
 #----------------------TEST COMMAND----------------------#
 
 @bot.command()
