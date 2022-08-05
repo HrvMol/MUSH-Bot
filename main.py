@@ -4,7 +4,7 @@ from discord.ext import commands
 import os
 import sys
 import socket
-import random
+import logging
 
 if sys.platform == "linux":
     try:
@@ -29,6 +29,19 @@ TOKEN = os.environ.get('BOT_TOKEN')
 #list of reaction roles data
 bot.reaction_roles = []
 bot.join_message = ''
+
+#loads cogs from ./cogs folder
+for file in os.listdir('./cogs'):
+    if file.endswith('.py'):
+        bot.load_extension(f'cogs.{file[:-3]}')
+
+logger = logging.getLogger(__name__)
+
+handler = logging.FileHandler('logs/main.log')
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.warning('test')
 
 #on boot function
 @bot.event
@@ -135,45 +148,6 @@ async def get_guild(ctx):
 @bot.command()
 async def srb(ctx):
     await ctx.send(bot.srb_timings)
-    await ctx.message.delete()
-
-#----------------------EASTER EGGS-----------------------#
-
-@bot.event
-async def on_message(ctx):
-    await bot.process_commands(ctx)
-    if ctx.author != bot.user:
-        if random.randint(0, 1000) == 1:
-            await ctx.channel.send("fuck you")
-            
-@bot.command()
-async def best(ctx):
-    await ctx.channel.send("back Boris \nhttps://tinyurl.com/5yrzz5x6")
-    await ctx.message.delete()
-
-@bot.command()
-async def nephew(ctx):
-    await ctx.channel.send("head of dinosaurs \nhttps://tinyurl.com/bdfmkupv")
-    await ctx.message.delete()
-
-@bot.command()
-async def potatoes(ctx):
-    await ctx.channel.send("POV: you voted Tories \nhttps://tenor.com/view/boom-bomb-car-bomb-explosion-detonate-gif-15743196")
-    await ctx.message.delete()
-    
-@bot.command()
-async def salty(ctx):
-    await ctx.channel.send("2 world wars, 1 world cup and one womens Euros \nhttps://tinyurl.com/2m3reh38")
-    await ctx.message.delete()
-
-@bot.command()
-async def russianbias(ctx):
-    await ctx.channel.send("https://static.wikia.nocookie.net/meme/images/9/9f/RussianBias.gif/revision/latest/top-crop/width/360/height/360?cb=20190526003405")
-    await ctx.message.delete()
-
-@bot.command()
-async def scottsman(ctx):
-    await ctx.channel.send("https://cdn.discordapp.com/attachments/987513534227316789/1003431507597205584/received_272561204831416.jpeg")
     await ctx.message.delete()
 
 #----------------------TEST COMMAND----------------------#
