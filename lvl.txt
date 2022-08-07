@@ -18,7 +18,6 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 
 standard_img = "images/tam.png"
-xp_per_message = 20
 
 class Levelsys(commands.Cog):
     def __init__(self, bot):
@@ -40,7 +39,7 @@ class Levelsys(commands.Cog):
                     xp = data[str(message.guild.id)][str(message.author.id)]['xp']
                     lvl = data[str(message.guild.id)][str(message.author.id)]['level']
 
-                    increased_xp = xp + xp_per_message
+                    increased_xp = xp + 25
                     new_level = int(increased_xp/100)
 
                     data[str(message.guild.id)][str(message.author.id)]['xp'] = increased_xp
@@ -184,25 +183,22 @@ class Levelsys(commands.Cog):
             data = json.load(f)
 
             l = {}
+            total_xp = []
 
             for userid in data[str(ctx.guild.id)]:
-                print(userid)
                 xp = int(data[str(ctx.guild.id)][str(userid)]['xp']+(int(data[str(ctx.guild.id)][str(userid)]['level'])*100))
-                print('done xp')
+
                 l[xp] = f"{userid};{data[str(ctx.guild.id)][str(userid)]['level']};{data[str(ctx.guild.id)][str(userid)]['xp']}"
-                print('done l')
+                total_xp.append(xp)
 
-            marklist = sorted(l.items(), key=lambda x:x[0], reverse=True)
-            l = dict(marklist)
-
+            total_xp = sorted(total_xp, reverse=True)
             index=1
 
             mbed = discord.Embed(
             title="Leaderboard Command Results"
             )
 
-            for amt in l:
-                print(l[amt])
+            for amt in total_xp:
                 id_ = int(str(l[amt]).split(";")[0])
                 level = int(str(l[amt]).split(";")[1])
                 xp = int(str(l[amt]).split(";")[2])
@@ -221,6 +217,8 @@ class Levelsys(commands.Cog):
                         index += 1
 
             await ctx.send(embed = mbed)
-           
+        
+
+        
 def setup(client):
     client.add_cog(Levelsys(client))

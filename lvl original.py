@@ -18,7 +18,6 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 
 standard_img = "images/tam.png"
-xp_per_message = 20
 
 class Levelsys(commands.Cog):
     def __init__(self, bot):
@@ -35,44 +34,35 @@ class Levelsys(commands.Cog):
                 data = json.load(f)
             
             #checking if user is in database
-            if str(message.guild.id) in data:
-                if str(message.author.id) in data[str(message.guild.id)]:
-                    xp = data[str(message.guild.id)][str(message.author.id)]['xp']
-                    lvl = data[str(message.guild.id)][str(message.author.id)]['level']
+            if str(message.author.id) in data:
+                xp = data[str(message.author.id)]['xp']
+                lvl = data[str(message.author.id)]['level']
 
-                    increased_xp = xp + xp_per_message
-                    new_level = int(increased_xp/100)
+                increased_xp = xp + 25
+                new_level = int(increased_xp/100)
 
-                    data[str(message.guild.id)][str(message.author.id)]['xp'] = increased_xp
-
-                    with open("levels.json", "w") as f:
-                        json.dump(data, f, indent=2)
-
-                    if new_level > lvl:
-                        await message.channel.send(f'{message.author.mention} Just Levelled Up to Level {new_level}')
-
-                        data[str(message.guild.id)][str(message.author.id)]['level'] = new_level
-                        data[str(message.guild.id)][str(message.author.id)]['xp'] = 0
-
-                        with open("levels.json", "w") as f:
-                            json.dump(data, f, indent=2)
-            
-                elif str(message.guild.id) in data:
-                    data[str(message.guild.id)][str(message.author.id)] = {}
-                    data[str(message.guild.id)][str(message.author.id)]['xp'] = 0
-                    data[str(message.guild.id)][str(message.author.id)]['level'] = 1
-                    data[str(message.guild.id)][str(message.author.id)]['img'] = standard_img
-                    data[str(message.guild.id)][str(message.author.id)]['color'] = "#ff9933"
-                else:
-                    data[str(message.guild.id)] = {}
-                    data[str(message.guild.id)][str(message.author.id)] = {}
-                    data[str(message.guild.id)][str(message.author.id)]['xp'] = 0
-                    data[str(message.guild.id)][str(message.author.id)]['level'] = 1
-                    data[str(message.guild.id)][str(message.author.id)]['img'] = standard_img
-                    data[str(message.guild.id)][str(message.author.id)]['color'] = "#ff9933"
+                data[str(message.author.id)]['xp'] = increased_xp
 
                 with open("levels.json", "w") as f:
                     json.dump(data, f, indent=2)
+
+                if new_level > lvl:
+                    await message.channel.send(f'{message.author.mention} Just Levelled Up to Level {new_level}')
+
+                    data[str(message.author.id)]['level'] = new_level
+                    data[str(message.author.id)]['xp'] = 0
+
+                    with open("levels.json", "w") as f:
+                        json.dump(data, f, indent=2)
+            else:
+                data[str(message.author.id)] = {}
+                data[str(message.author.id)]['xp'] = 0
+                data[str(message.author.id)]['level'] = 1
+                data[str(message.author.id)]['img'] = standard_img
+                data[str(message.author.id)]['color'] = "#ff9933"
+
+            with open("levels.json", "w") as f:
+                json.dump(data, f, indent=2)
         
     @commands.command(name="rank")
     async def rank(self, ctx: commands.Context, member: Optional[discord.Member]):
@@ -80,13 +70,13 @@ class Levelsys(commands.Cog):
         with open("levels.json", "r") as f:
             data = json.load(f)
 
-            xp = data[str(ctx.guild.id)][str(user.id)]["xp"]
-            lvl = data[str(ctx.guild.id)][str(user.id)]["level"]
-            url = data[str(ctx.guild.id)][str(user.id)]['img']
-            text_color = data[str(ctx.guild.id)][str(user.id)]['color']
+            xp = data[str(user.id)]["xp"]
+            lvl = data[str(user.id)]["level"]
+            url = data[str(user.id)]['img']
+            text_color = data[str(user.id)]['color']
             
             next_levelup_xp = (lvl+1)*100
-            xp_have = data[str(ctx.guild.id)][str(user.id)]["xp"]
+            xp_have = data[str(user.id)]["xp"]
             percentage = int((xp_have*100)/next_levelup_xp)
 
             #image to use
@@ -177,50 +167,6 @@ class Levelsys(commands.Cog):
 
         else:
             await ctx.send("Invalid hex code")
-
-    @commands.command(name="leaderboard")
-    async def leaderboard(self, ctx, range_num=5):
-        with open("levels.json", "r") as f:
-            data = json.load(f)
-
-            l = {}
-
-            for userid in data[str(ctx.guild.id)]:
-                print(userid)
-                xp = int(data[str(ctx.guild.id)][str(userid)]['xp']+(int(data[str(ctx.guild.id)][str(userid)]['level'])*100))
-                print('done xp')
-                l[xp] = f"{userid};{data[str(ctx.guild.id)][str(userid)]['level']};{data[str(ctx.guild.id)][str(userid)]['xp']}"
-                print('done l')
-
-            marklist = sorted(l.items(), key=lambda x:x[0], reverse=True)
-            l = dict(marklist)
-
-            index=1
-
-            mbed = discord.Embed(
-            title="Leaderboard Command Results"
-            )
-
-            for amt in l:
-                print(l[amt])
-                id_ = int(str(l[amt]).split(";")[0])
-                level = int(str(l[amt]).split(";")[1])
-                xp = int(str(l[amt]).split(";")[2])
-
-                member = await self.bot.fetch_user(id_)
-
-                if member is not None:
-                    name = member.name
-                    mbed.add_field(name=f"{index}. {name}",
-                    value=f"**Level: {level} | XP: {xp}**", 
-                    inline=False)
-
-                    if index == range_num:
-                        break
-                    else:
-                        index += 1
-
-            await ctx.send(embed = mbed)
-           
+  
 def setup(client):
     client.add_cog(Levelsys(client))

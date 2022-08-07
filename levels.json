@@ -1,26 +1,26 @@
 {
   "993562809231233155": {
     "464870233358729237": {
-      "xp": 50,
-      "level": 2,
-      "img": "images/tam.png",
-      "color": "#ff9933"
-    },
-    "709841612443746325": {
-      "xp": 75,
-      "level": 1,
+      "xp": 0,
+      "level": 6,
       "img": "images/tam.png",
       "color": "#ff9933"
     },
     "795251737752502272": {
-      "xp": 75,
-      "level": 5,
+      "xp": 100,
+      "level": 6,
       "img": "images/tam.png",
       "color": "#ff9933"
     },
     "700851213079412736": {
       "xp": 75,
       "level": 1,
+      "img": "images/tam.png",
+      "color": "#ff9933"
+    },
+    "709841612443746325": {
+      "xp": 75,
+      "level": 2,
       "img": "images/tam.png",
       "color": "#ff9933"
     }
