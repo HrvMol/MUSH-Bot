@@ -221,6 +221,6 @@ class Levelsys(commands.Cog):
                         index += 1
 
             await ctx.send(embed = mbed)
-           
+
 def setup(client):
     client.add_cog(Levelsys(client))
