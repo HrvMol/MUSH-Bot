@@ -6,15 +6,15 @@ import sys
 import socket
 import logging
 
-if sys.platform == "linux":
-    try:
-        s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-        s.bind('\0postconnect_gateway_notify_lock')
-    except socket.error as e:
-        error_code = e.args[0]
-        error_string = e.args[1]
-        print("Process already running (%d:%s ). Exiting" % (error_code, error_string))
-        sys.exit(0)
+# if sys.platform == "linux":
+#     try:
+#         s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+#         s.bind('\0postconnect_gateway_notify_lock')
+#     except socket.error as e:
+#         error_code = e.args[0]
+#         error_string = e.args[1]
+#         print("Process already running (%d:%s ). Exiting" % (error_code, error_string))
+#         sys.exit(0)
     
 if "mush-bot" not in os.getcwd().lower():
     os.chdir(os.getcwd()+"/mush-bot")
