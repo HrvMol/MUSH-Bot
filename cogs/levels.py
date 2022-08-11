@@ -30,9 +30,11 @@ class Levelsys(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         print("Levelling Cog Loaded")
+        logger.info('Levelling Cog Loaded')
 
     @commands.Cog.listener()
     async def on_message(self, message):
+        logger.info('started message')
         if not message.author.bot:
             with open("levels.json", "r") as f:
                 data = json.load(f)
@@ -151,6 +153,7 @@ class Levelsys(commands.Cog):
     
     @commands.command(name="image")
     async def image(self, ctx, url):
+        logger.info('started image')
         with open("levels.json", "r") as f:
             data = json.load(f)
         
@@ -162,6 +165,7 @@ class Levelsys(commands.Cog):
 
     @commands.command(name="color", aliases=["colour"])
     async def color(self, ctx, set_color):
+        logger.info('started color')
         with open("levels.json", "r") as f:
             data = json.load(f)
         
@@ -185,6 +189,7 @@ class Levelsys(commands.Cog):
 
     @commands.command(name="leaderboard")
     async def leaderboard(self, ctx, range_num=5):
+        logger.info('started leaderboard')
         with open("levels.json", "r") as f:
             data = json.load(f)
 

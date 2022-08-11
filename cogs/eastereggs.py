@@ -48,7 +48,7 @@ class Levelsys(commands.Cog):
         await ctx.message.delete()
 
     @commands.command(name="posh")
-    async def scottsman(self, ctx):
+    async def posh(self, ctx):
         await ctx.channel.send("https://cdn.discordapp.com/attachments/987513534227316789/1005955570991370380/unknown.png")
         await ctx.message.delete()
     
