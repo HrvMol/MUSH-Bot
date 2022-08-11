@@ -1,3 +1,4 @@
+from distutils.log import INFO
 import discord
 import json
 import logging
@@ -16,6 +17,8 @@ handler = logging.FileHandler('logs/levels.log')
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 handler.setFormatter(formatter)
 logger.addHandler(handler)
+logger.setLevel('INFO')
+
 
 standard_img = "images/tam.png"
 xp_per_message = 20
@@ -76,6 +79,7 @@ class Levelsys(commands.Cog):
         
     @commands.command(name="rank")
     async def rank(self, ctx: commands.Context, member: Optional[discord.Member]):
+        logger.info('started rank')
         user = member or ctx.author
         with open("levels.json", "r") as f:
             data = json.load(f)
@@ -143,6 +147,7 @@ class Levelsys(commands.Cog):
             #making the image and sending it
             card = File(fp=background.image_bytes, filename="rank.png")
             await ctx.send(file=card)
+            logger.info('sent')
     
     @commands.command(name="image")
     async def image(self, ctx, url):
