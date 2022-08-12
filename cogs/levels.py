@@ -1,4 +1,3 @@
-from distutils.log import INFO
 import discord
 import json
 import logging
@@ -157,7 +156,7 @@ class Levelsys(commands.Cog):
         with open("levels.json", "r") as f:
             data = json.load(f)
         
-        data[str(ctx.author.id)]['img'] = url
+        data[str(ctx.guild.id)][str(ctx.author.id)]['img'] = url
 
         with open("levels.json", "w") as f:
             json.dump(data, f, indent=2)
@@ -178,7 +177,7 @@ class Levelsys(commands.Cog):
 
         if match:
             #putting data back into json
-            data[str(ctx.author.id)]['color'] = set_color
+            data[str(ctx.guild.id)][str(ctx.author.id)]['color'] = set_color
 
             with open("levels.json", "w") as f:
                 json.dump(data, f, indent=2)

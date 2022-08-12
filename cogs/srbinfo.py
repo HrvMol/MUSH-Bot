@@ -1,4 +1,3 @@
-from xml.dom import expatbuilder
 import discord
 from discord.ext import commands
 import aiofiles
@@ -20,8 +19,8 @@ class Levelsys(commands.Cog):
                 self.bot.explaination = await file.read()
         except: pass
 
-    @commands.command(name='explain')
-    async def explain(self, ctx):
+    @commands.command(name='srbinfo')
+    async def srbinfo(self, ctx):
         await ctx.send(self.bot.explaination)
         await ctx.message.delete()
 
