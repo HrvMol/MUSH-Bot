@@ -6,15 +6,15 @@ import sys
 import socket
 import logging
 
-# if sys.platform == "linux":
-#     try:
-#         s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-#         s.bind('\0postconnect_gateway_notify_lock')
-#     except socket.error as e:
-#         error_code = e.args[0]
-#         error_string = e.args[1]
-#         print("Process already running (%d:%s ). Exiting" % (error_code, error_string))
-#         sys.exit(0)
+if sys.platform == "linux":
+    try:
+        s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+        s.bind('\0postconnect_gateway_notify_lock')
+    except socket.error as e:
+        error_code = e.args[0]
+        error_string = e.args[1]
+        print("Process already running (%d:%s ). Exiting" % (error_code, error_string))
+        sys.exit(0)
     
 if "mush-bot" not in os.getcwd().lower():
     os.chdir(os.getcwd()+"/mush-bot")
@@ -64,11 +64,6 @@ async def on_ready():
     #reads join_message file and puts data into join_message list
     async with aiofiles.open("join_message.txt", mode="r") as file:
         bot.join_message = await file.read()
-
-    try:
-        async with aiofiles.open("srb_timings.txt", mode="r") as file:
-            bot.srb_timings = await file.read()
-    except: pass
 
     try:
         async with aiofiles.open("help.txt", mode="r") as file:
@@ -142,13 +137,6 @@ async def on_member_join(ctx):
 async def get_guild(ctx):
     id = ctx.message.guild.id
     await ctx.send(f"guild id: {id}")
-
-#-----------------------SRB TIMINGS----------------------#
-
-@bot.command()
-async def srb(ctx):
-    await ctx.send(bot.srb_timings)
-    await ctx.message.delete()
 
 #----------------------TEST COMMAND----------------------#
 

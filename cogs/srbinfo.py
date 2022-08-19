@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 import aiofiles
-
+from datetime import datetime, timezone
 
 
 class Levelsys(commands.Cog):
@@ -19,10 +19,15 @@ class Levelsys(commands.Cog):
                 self.bot.explaination = await file.read()
         except: pass
 
-    @commands.command(name='srbinfo')
-    async def srbinfo(self, ctx):
-        await ctx.send(self.bot.explaination)
-        await ctx.message.delete()
+    @commands.command(name='srb')
+    async def srb(self, ctx, arg):
+        closest = ''
+        if arg == 'info':
+            await ctx.send(self.bot.explaination)
+            await ctx.message.delete()
+        else:
+            ctx.send('incorrect argument')
+
 
 def setup(client):
     client.add_cog(Levelsys(client))

@@ -6,7 +6,7 @@ from discord.ext import commands
 from typing import Optional
 from easy_pil import Editor, load_image_async, Font
 
-from PIL import Image
+from PIL import Image, ImageOps
 import requests
 
 import re
@@ -77,6 +77,10 @@ class Levelsys(commands.Cog):
 
                 with open("levels.json", "w") as f:
                     json.dump(data, f, indent=2)
+            else:
+                data[str(message.guild.id)] = message.guild.id
+                with open("levels.json", "w") as f:
+                    json.dump(data, f, indent=2)
         
     @commands.command(name="rank")
     async def rank(self, ctx: commands.Context, member: Optional[discord.Member]):
@@ -100,8 +104,7 @@ class Levelsys(commands.Cog):
                     im = Image.open(requests.get(url, stream=True).raw)
                     width, height = im.size
                     if width != 900 or height != 300:
-                        im = standard_img
-                        await ctx.send("Warning: The Image you have chosen is not 900 x 300px, please change the size in order for your image to work")
+                        im = ImageOps.fit(im, (900, 300))
                 except:
                     im = standard_img
                     await ctx.send("Warning: The image link you have chosen is invalid")
@@ -187,7 +190,7 @@ class Levelsys(commands.Cog):
             await ctx.send("Invalid hex code")
 
     @commands.command(name="leaderboard")
-    async def leaderboard(self, ctx, range_num=5):
+    async def leaderboard(self, ctx, range_num='10'):
         logger.info('started leaderboard')
         with open("levels.json", "r") as f:
             data = json.load(f)
@@ -195,11 +198,8 @@ class Levelsys(commands.Cog):
             l = {}
 
             for userid in data[str(ctx.guild.id)]:
-                print(userid)
                 xp = int(data[str(ctx.guild.id)][str(userid)]['xp']+(int(data[str(ctx.guild.id)][str(userid)]['level'])*100))
-                print('done xp')
                 l[xp] = f"{userid};{data[str(ctx.guild.id)][str(userid)]['level']};{data[str(ctx.guild.id)][str(userid)]['xp']}"
-                print('done l')
 
             marklist = sorted(l.items(), key=lambda x:x[0], reverse=True)
             l = dict(marklist)
@@ -211,7 +211,6 @@ class Levelsys(commands.Cog):
             )
 
             for amt in l:
-                print(l[amt])
                 id_ = int(str(l[amt]).split(";")[0])
                 level = int(str(l[amt]).split(";")[1])
                 xp = int(str(l[amt]).split(";")[2])
@@ -223,13 +222,18 @@ class Levelsys(commands.Cog):
                     mbed.add_field(name=f"{index}. {name}",
                     value=f"**Level: {level} | XP: {xp}**", 
                     inline=False)
-
-                    if index == range_num:
-                        break
-                    else:
-                        index += 1
+                    try:
+                        if index == int(range_num):
+                            break
+                    except: #all function
+                        if range_num == 'all' or 'a':
+                            index += 1
+                        else:
+                            range_num = 10
+                            index += 1
 
             await ctx.send(embed = mbed)
+
 
 def setup(client):
     client.add_cog(Levelsys(client))
