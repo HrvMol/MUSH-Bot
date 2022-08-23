@@ -9,9 +9,9 @@ class Levelsys(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.bot.explaination = ''
-        self.bot.eu_srb_start = datetime(13,00,00)
-        self.bot.eu_srb_end = datetime(21,00,00)
-        self.bot.us_srb_start = datetime(00,00,00)
+        #self.bot.eu_srb_start = datetime(13,00,00)
+        #self.bot.eu_srb_end = datetime(21,00,00)
+        #self.bot.us_srb_start = datetime(00,00,00)
         #self.bot.us_stb_end = datetime(06,00,00)
 
     @commands.Cog.listener()
