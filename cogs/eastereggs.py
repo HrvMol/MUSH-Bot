@@ -43,7 +43,7 @@ class Levelsys(commands.Cog):
         await ctx.message.delete()
 
     @commands.command(name="scottsman")
-    async def scottsman(self, ctx):
+    async def scotsman(self, ctx):
         await ctx.channel.send("https://cdn.discordapp.com/attachments/987513534227316789/1003431507597205584/received_272561204831416.jpeg")
         await ctx.message.delete()
 

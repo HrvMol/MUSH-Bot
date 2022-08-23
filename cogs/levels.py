@@ -83,7 +83,7 @@ class Levelsys(commands.Cog):
                     with open("levels.json", "w") as f:
                         json.dump(data, f, indent=2)
         except Exception as error:
-            logger.error(error)
+            logger.exception(error)
         
     @commands.command(name="rank")
     async def rank(self, ctx: commands.Context, member: Optional[discord.Member]):
@@ -172,7 +172,7 @@ class Levelsys(commands.Cog):
                 json.dump(data, f, indent=2)
             await ctx.send("New image set!")
         except Exception as error:
-            logger.error(error)
+            logger.exception(error)
 
     @commands.command(name="color", aliases=["colour"])
     async def color(self, ctx, set_color):
@@ -200,7 +200,7 @@ class Levelsys(commands.Cog):
                 await ctx.send("Invalid hex code")
         
         except Exception as error:
-            logger.error(error)
+            logger.exception(error)
 
     @commands.command(name="leaderboard")
     async def leaderboard(self, ctx, range_num='10'):
@@ -249,7 +249,7 @@ class Levelsys(commands.Cog):
                 await ctx.send(embed = mbed)
             
         except Exception as error:
-            logger.error(error)
+            logger.exception(error)
 
 
 def setup(client):
