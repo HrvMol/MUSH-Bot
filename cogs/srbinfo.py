@@ -9,6 +9,10 @@ class Levelsys(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.bot.explaination = ''
+        self.bot.srb_time = [
+            datetime(13,00,00), datetime(21,00,00),
+            datetime(00,00,00), datetime(06,00,00)
+        ]
 
     @commands.Cog.listener()
     async def on_ready(self):
