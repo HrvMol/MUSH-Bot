@@ -23,14 +23,11 @@ class Levelsys(commands.Cog):
                 self.bot.explaination = await file.read()
         except: pass
 
-    @commands.command(name='srb')
-    async def srb(self, ctx, arg):
-        closest = ''
-        if arg == 'info':
-            await ctx.send(self.bot.explaination)
-            await ctx.message.delete()
-        else:
-            ctx.send('incorrect argument')
+    @commands.command(name='srbinfo')
+    async def srbinfo(self, ctx):
+        await ctx.send(self.bot.explaination)
+        await ctx.message.delete()
+
 
 
 def setup(client):
