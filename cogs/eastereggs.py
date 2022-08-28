@@ -12,9 +12,11 @@ class Levelsys(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, ctx):
+        print()
         if ctx.author != self.bot.user:
-            if random.randint(0, 1000) == 1:
+            if random.randint(0, 2500) == 1:
                 await ctx.channel.send("fuck you")
+
 
     @commands.command(name="best")
     async def best(self, ctx):
