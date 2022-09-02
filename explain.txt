@@ -19,7 +19,7 @@ __US__
 GMT: 01:00 - 07:00
 BST: 02:00 - 08:00
 BRT: 22:00 - 04:00
-EDT: 21:00 - 03:00
-PDT: 17:00 - 23:00
+EST: 21:00 - 03:00
+PST: 17:00 - 23:00
 ```
 We will call through the #srb-signup channel. Keep your notifications on.
