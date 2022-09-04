@@ -41,7 +41,8 @@ class Levelsys(commands.Cog):
                 
                 #checking if user is in database
                 if str(message.guild.id) in data:
-                    if str(message.author.id) in data[str(message.guild.id)]:
+                    author = str(message.author.id)
+                    if author in data[str(message.guild.id)]:
                         xp = data[str(message.guild.id)][str(message.author.id)]['xp']
                         lvl = data[str(message.guild.id)][str(message.author.id)]['level']
 
