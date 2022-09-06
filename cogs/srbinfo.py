@@ -36,8 +36,8 @@ class Levelsys(commands.Cog):
         await ctx.send(f'Synced {len(fmt)} commands.')
 
     @commands.command(name='srbinfo', description="information on SRB")
-    async def srbinfo(self, interaction: discord.Interaction):
-        await interaction.response.send_message(self.bot.explaination)
+    async def srbinfo(self, ctx):
+        await ctx.send(self.bot.explaination)
         # await ctx.message.delete()
         
     @commands.command(name='srbwhen')
