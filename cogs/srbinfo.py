@@ -16,10 +16,17 @@ class Levelsys(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
         self.bot.explaination = ''
-        self.bot.eu_srb_start = datetime.strptime("14:00:00", "%H:%M:%S")
-        self.bot.eu_srb_end = datetime.strptime("22:00:00", "%H:%M:%S")
-        self.bot.us_srb_start = datetime.strptime("01:00:00", "%H:%M:%S")
-        self.bot.us_stb_end = datetime.strptime("07:00:00", "%H:%M:%S")
+        # GMT
+        # self.bot.eu_srb_start = datetime.strptime("14:00:00", "%H:%M:%S")
+        # self.bot.eu_srb_end = datetime.strptime("22:00:00", "%H:%M:%S")
+        # self.bot.us_srb_start = datetime.strptime("01:00:00", "%H:%M:%S")
+        # self.bot.us_stb_end = datetime.strptime("07:00:00", "%H:%M:%S")
+
+        # BST
+        self.bot.eu_srb_start = datetime.strptime("15:00:00", "%H:%M:%S")
+        self.bot.eu_srb_end = datetime.strptime("23:00:00", "%H:%M:%S")
+        self.bot.us_srb_start = datetime.strptime("02:00:00", "%H:%M:%S")
+        self.bot.us_stb_end = datetime.strptime("08:00:00", "%H:%M:%S")
 
     @commands.Cog.listener()
     async def on_ready(self):
