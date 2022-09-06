@@ -1,8 +1,15 @@
+import logging
 import discord
 from discord.ext import commands
 import aiofiles
 from datetime import datetime, timedelta
 
+logger = logging.getLogger(__name__)
+handler = logging.FileHandler('logs/srbinfo.log')
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.setLevel('INFO')
 
 class Levelsys(commands.Cog):
     
@@ -35,34 +42,36 @@ class Levelsys(commands.Cog):
         
     @commands.command(name='srbwhen')
     async def srbwhen(self, ctx):
+        try:
+            def convert_to_format(td):
+                hours, remainder = divmod(td.seconds, 3600)
+                minutes, seconds = divmod(remainder, 60)
+                return datetime.strptime(f'{hours}:{minutes}:{seconds}', "%H:%M:%S")
 
-        def convert_to_format(td):
-            hours, remainder = divmod(td.seconds, 3600)
-            minutes, seconds = divmod(remainder, 60)
-            return datetime.strptime(f'{hours}:{minutes}:{seconds}', "%H:%M:%S")
+            now = datetime.now()
+            current_time = now.strftime("%H:%M:%S")
+            format_current = datetime.strptime(current_time, "%H:%M:%S")
 
-        now = datetime.now()
-        current_time = now.strftime("%H:%M:%S")
-        format_current = datetime.strptime(current_time, "%H:%M:%S")
+            timeToEU = (self.bot.eu_srb_start - format_current) + timedelta(days=1)
+            timeToEUEnd = (self.bot.eu_srb_end - format_current)
+            timeToUS = (self.bot.us_srb_start - format_current) + timedelta(days=1)
+            timeToUSEnd = (self.bot.eu_srb_end - format_current)
 
-        timeToEU = (self.bot.eu_srb_start - format_current) + timedelta(days=1)
-        timeToEUEnd = (self.bot.eu_srb_end - format_current)
-        timeToUS = (self.bot.us_srb_start - format_current) + timedelta(days=1)
-        timeToUSEnd = (self.bot.eu_srb_end - format_current)
+            timeToEU = datetime.strftime(convert_to_format(timeToEU), "%H:%M:%S")
+            timeToEUEnd = datetime.strftime(convert_to_format(timeToEUEnd), "%H:%M:%S")
+            timeToUS = datetime.strftime(convert_to_format(timeToUS), "%H:%M:%S")
+            timeToUSEnd = datetime.strftime(convert_to_format(timeToUSEnd), "%H:%M:%S")
 
-        timeToEU = datetime.strftime(convert_to_format(timeToEU), "%H:%M:%S")
-        timeToEUEnd = datetime.strftime(convert_to_format(timeToEUEnd), "%H:%M:%S")
-        timeToUS = datetime.strftime(convert_to_format(timeToUS), "%H:%M:%S")
-        timeToUSEnd = datetime.strftime(convert_to_format(timeToUSEnd), "%H:%M:%S")
+            if timeToEU > timeToEUEnd and int(timeToEU[:2]) > 12:
+                await ctx.send(f'EU SRB window is currently open \nNext US window opens in: `{timeToUS}`')
+            elif timeToUS > timeToUSEnd and int(timeToUS[:2]) > 12:
+                await ctx.send(f'US SRB window is currently open \nNext EU window opens in: `{timeToEU}`')
+            else:
+                await ctx.send(f'Next EU window opens in: `{timeToEU}`\nNext US window opens in: `{timeToUS}`')
 
-        if timeToEU > timeToEUEnd and int(timeToEU[:2]) > 12:
-            await ctx.send(f'EU SRB window is currently open \nNext US window opens in: `{timeToUS}`')
-        elif timeToUS > timeToUSEnd and int(timeToUS[:2]) > 12:
-            await ctx.send(f'US SRB window is currently open \nNext EU window opens in: `{timeToEU}`')
-        else:
-            await ctx.send(f'Next EU window opens in: `{timeToEU}`\nNext US window opens in: `{timeToUS}`')
-
-        await ctx.message.delete()
+            await ctx.message.delete()
+        except Exception as error:
+            logger.exception(error)
 
 
 
