@@ -45,7 +45,7 @@ class Levelsys(commands.Cog):
     @commands.command(name='srbinfo', description="information on SRB")
     async def srbinfo(self, ctx):
         await ctx.send(self.bot.explaination)
-        # await ctx.message.delete()
+        await ctx.message.delete()
         
     @commands.command(name='srbwhen')
     async def srbwhen(self, ctx):
