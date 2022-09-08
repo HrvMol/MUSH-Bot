@@ -14,7 +14,7 @@ class Levelsys(commands.Cog):
     async def on_message(self, ctx):
         print()
         if ctx.author != self.bot.user:
-            if ctx.author == "407903863778312196":
+            if ctx.author.id == "407903863778312196":
                 await ctx.channel.send("Not Tornado")
             if random.randint(0, 2500) == 1:
                 await ctx.channel.send("fuck you")
