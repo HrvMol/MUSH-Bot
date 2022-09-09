@@ -26,7 +26,7 @@ class Levelsys(commands.Cog):
         self.bot.eu_srb_start = datetime.strptime("15:00:00", "%H:%M:%S")
         self.bot.eu_srb_end = datetime.strptime("23:00:00", "%H:%M:%S")
         self.bot.us_srb_start = datetime.strptime("02:00:00", "%H:%M:%S")
-        self.bot.us_stb_end = datetime.strptime("08:00:00", "%H:%M:%S")
+        self.bot.us_srb_end = datetime.strptime("08:00:00", "%H:%M:%S")
 
     @commands.Cog.listener()
     async def on_ready(self):
@@ -57,17 +57,19 @@ class Levelsys(commands.Cog):
 
             now = datetime.now()
             current_time = now.strftime("%H:%M:%S")
-            format_current = datetime.strptime(current_time, "%H:%M:%S")
+            format_current = datetime.strptime("11:00:00", "%H:%M:%S")
+            # format_current = datetime.strptime(current_time, "%H:%M:%S")
 
             timeToEU = (self.bot.eu_srb_start - format_current) + timedelta(days=1)
             timeToEUEnd = (self.bot.eu_srb_end - format_current)
             timeToUS = (self.bot.us_srb_start - format_current) + timedelta(days=1)
-            timeToUSEnd = (self.bot.eu_srb_end - format_current)
+            timeToUSEnd = (self.bot.us_srb_end - format_current)
 
             timeToEU = datetime.strftime(convert_to_format(timeToEU), "%H:%M:%S")
             timeToEUEnd = datetime.strftime(convert_to_format(timeToEUEnd), "%H:%M:%S")
             timeToUS = datetime.strftime(convert_to_format(timeToUS), "%H:%M:%S")
             timeToUSEnd = datetime.strftime(convert_to_format(timeToUSEnd), "%H:%M:%S")
+
 
             if timeToEU > timeToEUEnd and int(timeToEU[:2]) > 12:
                 await ctx.send(f'EU SRB window is currently open \nNext US window opens in: `{timeToUS}`')
