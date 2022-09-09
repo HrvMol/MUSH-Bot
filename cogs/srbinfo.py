@@ -57,8 +57,7 @@ class Levelsys(commands.Cog):
 
             now = datetime.now()
             current_time = now.strftime("%H:%M:%S")
-            format_current = datetime.strptime("11:00:00", "%H:%M:%S")
-            # format_current = datetime.strptime(current_time, "%H:%M:%S")
+            format_current = datetime.strptime(current_time, "%H:%M:%S")
 
             timeToEU = (self.bot.eu_srb_start - format_current) + timedelta(days=1)
             timeToEUEnd = (self.bot.eu_srb_end - format_current)
