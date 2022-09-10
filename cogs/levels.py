@@ -230,10 +230,10 @@ class Levelsys(commands.Cog):
                     level = int(str(l[amt]).split(";")[1])
                     xp = int(str(l[amt]).split(";")[2])
 
-                    member = await self.bot.fetch_user(id_)
+                    member = ctx.guild.get_member(id_)
 
                     if member is not None:
-                        name = member.name
+                        name = member.display_name
                         mbed.add_field(name=f"{index}. {name}",
                         value=f"**Level: {level} | XP: {xp}**", 
                         inline=False)
@@ -250,6 +250,17 @@ class Levelsys(commands.Cog):
             
         except Exception as error:
             logger.exception(error)
+
+    @commands.command(name="username")
+    async def username(self, ctx):
+        print(ctx.author)
+        print(ctx.author.display_name)
+        guild_id = 993562809231233155
+        guild = self.bot.get_guild(guild_id)
+        id = guild.get_member(ctx.author.id)
+        print(id)
+        user = self.bot.get_user(id)
+        print(id.display_name)
 
 
 def setup(client):
