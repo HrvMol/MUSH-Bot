@@ -240,6 +240,7 @@ class Levelsys(commands.Cog):
                     try:
                         if index == int(range_num):
                             break
+                        index += 1
                     except: #all function
                         if range_num == 'all' or 'a':
                             index += 1
