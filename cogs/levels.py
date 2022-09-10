@@ -237,15 +237,14 @@ class Levelsys(commands.Cog):
                         mbed.add_field(name=f"{index}. {name}",
                         value=f"**Level: {level} | XP: {xp}**", 
                         inline=False)
-                        try:
-                            if index == int(range_num):
-                                break
-                        except: #all function
-                            if range_num == 'all' or 'a':
-                                index += 1
-                            else:
-                                range_num = 10
-                                index += 1
+                        if index == int(range_num):
+                            break
+                        #all function
+                        if range_num == 'all' or 'a':
+                            index += 1
+                        else:
+                            range_num = 10
+                            index += 1
 
                 await ctx.send(embed = mbed)
             
