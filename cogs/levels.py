@@ -238,7 +238,7 @@ class Levelsys(commands.Cog):
                         value=f"**Level: {level} | XP: {xp}**", 
                         inline=False)
                     try:
-                        if index == int(range_num):
+                        if index - 1 == int(range_num):
                             break
                         index += 1
                     except: #all function
