@@ -71,11 +71,11 @@ class Levelsys(commands.Cog):
 
 
             if timeToEU > timeToEUEnd and int(timeToEU[:2]) > 12:
-                await ctx.send(f'EU SRB window is currently open \nNext US window opens in: `{timeToUS}`')
+                await ctx.send(f'EU SRB window is currently open, closes in `{timeToEUEnd}` from now\nNext US window opens in `{timeToUS}` from now')
             elif timeToUS > timeToUSEnd and int(timeToUS[:2]) > 12:
-                await ctx.send(f'US SRB window is currently open \nNext EU window opens in: `{timeToEU}`')
+                await ctx.send(f'US SRB window is currently open, closes in `{timeToUSEnd}` from now\nNext EU window opens in `{timeToEU}` from now')
             else:
-                await ctx.send(f'Next EU window opens in: `{timeToEU}`\nNext US window opens in: `{timeToUS}`')
+                await ctx.send(f'Next EU window opens in `{timeToEU}` from now\nNext US window opens in `{timeToUS}` from now')
 
             await ctx.message.delete()
         except Exception as error:
