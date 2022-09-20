@@ -6,8 +6,6 @@ import sys
 import socket
 import logging
 
-
-
 if sys.platform == "linux":
     try:
         s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
@@ -36,7 +34,7 @@ bot.join_message = ''
 #loads cogs from ./cogs folder
 for file in os.listdir('./cogs'):
     if file.endswith('.py'):
-        bot.load_extension(f'cogs.{file[:-3]}')
+        bot.load_extension("cogs." + file[:-3])
 
 logger = logging.getLogger(__name__)
 
@@ -135,17 +133,11 @@ async def on_member_join(ctx):
 
     await join_channel.send(f'{ctx.mention}\n {bot.join_message}')
 
-@bot.command()
-@commands.has_any_role("Sergeant", "Deputy Commander", "Commander", "Officer", "Discord Admin")
-async def get_guild(ctx):
-    id = ctx.message.guild.id
-    await ctx.send(f"guild id: {id}")
 
 #----------------------TEST COMMAND----------------------#
 
-@bot.command()
+@bot.slash_command(description="test if the bot is working")
 async def test(ctx):
-    await ctx.send("Operational")
-    await ctx.message.delete()
+    await ctx.respond("Operational")
 
 bot.run(TOKEN)

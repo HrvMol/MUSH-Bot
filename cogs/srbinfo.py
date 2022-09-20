@@ -1,6 +1,8 @@
 import logging
+from pydoc import describe
 import discord
 from discord.ext import commands
+from discord.commands import slash_command
 import aiofiles
 from datetime import datetime, timedelta
 
@@ -11,7 +13,7 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 logger.setLevel('INFO')
 
-class Levelsys(commands.Cog):
+class SrbInfo(commands.Cog):
     
     def __init__(self, bot: commands.Bot):
         self.bot = bot
@@ -37,17 +39,11 @@ class Levelsys(commands.Cog):
                 self.bot.explaination = await file.read()
         except: pass
 
-    @commands.command()
-    async def sync(self, ctx) -> None:
-        fmt = await ctx.bot.tree.sync(guild=ctx.guild)
-        await ctx.send(f'Synced {len(fmt)} commands.')
-
-    @commands.command(name='srbinfo', description="information on SRB")
+    @slash_command(description="information on SRB")
     async def srbinfo(self, ctx):
-        await ctx.send(self.bot.explaination)
-        await ctx.message.delete()
+        await ctx.respond(self.bot.explaination)
         
-    @commands.command(name='srbwhen')
+    @slash_command(description="the time until the next SRBs")
     async def srbwhen(self, ctx):
         try:
             def convert_to_format(td):
@@ -71,17 +67,16 @@ class Levelsys(commands.Cog):
 
 
             if timeToEU > timeToEUEnd and int(timeToEU[:2]) > 12:
-                await ctx.send(f'EU SRB window is currently open, closes in `{timeToEUEnd}` from now\nNext US window opens in `{timeToUS}` from now')
+                await ctx.respond(f'EU SRB window is currently open, closes in `{timeToEUEnd}` from now\nNext US window opens in `{timeToUS}` from now')
             elif timeToUS > timeToUSEnd and int(timeToUS[:2]) > 12:
-                await ctx.send(f'US SRB window is currently open, closes in `{timeToUSEnd}` from now\nNext EU window opens in `{timeToEU}` from now')
+                await ctx.respond(f'US SRB window is currently open, closes in `{timeToUSEnd}` from now\nNext EU window opens in `{timeToEU}` from now')
             else:
-                await ctx.send(f'Next EU window opens in `{timeToEU}` from now\nNext US window opens in `{timeToUS}` from now')
+                await ctx.respond(f'Next EU window opens in `{timeToEU}` from now\nNext US window opens in `{timeToUS}` from now')
 
-            await ctx.message.delete()
         except Exception as error:
             logger.exception(error)
 
 
 
 def setup(client):
-    client.add_cog(Levelsys(client))
+    client.add_cog(SrbInfo(client))

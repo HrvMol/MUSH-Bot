@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import random
 
-class Levelsys(commands.Cog):
+class EasterEggs(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -57,4 +57,4 @@ class Levelsys(commands.Cog):
         await ctx.message.delete()
     
 def setup(client):
-    client.add_cog(Levelsys(client))
+    client.add_cog(EasterEggs(client))

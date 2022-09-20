@@ -1,8 +1,10 @@
+from pydoc import describe
 import discord
 import json
 import logging
 from discord import File
 from discord.ext import commands
+from discord.commands import slash_command
 from typing import Optional
 from easy_pil import Editor, load_image_async, Font
 
@@ -22,7 +24,7 @@ logger.setLevel('INFO')
 standard_img = "images/tam.png"
 xp_per_message = 20
 
-class Levelsys(commands.Cog):
+class Levels(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -55,7 +57,7 @@ class Levelsys(commands.Cog):
                             json.dump(data, f, indent=2)
 
                         if new_level > lvl:
-                            await message.channel.send(f'{message.author.mention} Just Levelled Up to Level {new_level}')
+                            await message.respond(f'{message.author.mention} Just Levelled Up to Level {new_level}')
 
                             data[str(message.guild.id)][str(message.author.id)]['level'] = new_level
                             data[str(message.guild.id)][str(message.author.id)]['xp'] = 0
@@ -86,8 +88,10 @@ class Levelsys(commands.Cog):
         except Exception as error:
             logger.exception(error)
         
-    @commands.command(name="rank")
+    # @slash_command(description="information on the rank of a user")
+    @slash_command(description="show the rank of a user")
     async def rank(self, ctx: commands.Context, member: Optional[discord.Member]):
+        print('rank')
         try:
             logger.info('started rank')
             user = member or ctx.author
@@ -112,13 +116,13 @@ class Levelsys(commands.Cog):
                             im = ImageOps.fit(im, (900, 300))
                     except:
                         im = standard_img
-                        await ctx.send("Warning: The image link you have chosen is invalid")
+                        await ctx.respond("Warning: The image link you have chosen is invalid")
                 else:
                     im = url
 
                 background = Editor(im)
 
-                profile = await load_image_async(str(user.avatar_url))
+                profile = await load_image_async(str(user.display_avatar.url))
                 profile = Editor(profile).resize((150, 150)).circle_image()
 
                 poppins = Font.poppins(size=40)
@@ -142,7 +146,7 @@ class Levelsys(commands.Cog):
                         radius=20
                     )
                 #username
-                background.text((200, 40), str(user.name), font=poppins, color=text_color)
+                background.text((200, 40), str(user.display_name), font=poppins, color=text_color)
                 #divider
                 background.rectangle((200, 100), width=350, height=2, fill=text_color)
                 #xp data
@@ -155,12 +159,12 @@ class Levelsys(commands.Cog):
                     )
                 #making the image and sending it
                 card = File(fp=background.image_bytes, filename="rank.png")
-                await ctx.send(file=card)
+                await ctx.respond(file=card)
                 logger.info('sent')
         except Exception as error:
             logger.error(error)
     
-    @commands.command(name="image")
+    @slash_command(description="change the image used in the rank command")
     async def image(self, ctx, url):
         try:
             logger.info('started image')
@@ -171,11 +175,12 @@ class Levelsys(commands.Cog):
 
             with open("levels.json", "w") as f:
                 json.dump(data, f, indent=2)
-            await ctx.send("New image set!")
+            await ctx.respond("New image set!")
         except Exception as error:
+            await ctx.respond("Unknown Error")
             logger.exception(error)
 
-    @commands.command(name="color", aliases=["colour"])
+    @slash_command(description="change the color used in the rank command")
     async def color(self, ctx, set_color):
         try:
             logger.info('started color')
@@ -195,15 +200,15 @@ class Levelsys(commands.Cog):
 
                 with open("levels.json", "w") as f:
                     json.dump(data, f, indent=2)
-                await ctx.send("New colour set!")
+                await ctx.respond("New colour set!")
 
             else:
-                await ctx.send("Invalid hex code")
+                await ctx.respond("Invalid hex code")
         
         except Exception as error:
             logger.exception(error)
 
-    @commands.command(name="leaderboard")
+    @slash_command(description="show the leaderboard")
     async def leaderboard(self, ctx, range_num='10'):
         try:
             logger.info('started leaderboard')
@@ -248,22 +253,10 @@ class Levelsys(commands.Cog):
                             range_num = 10
                             index += 1
 
-                await ctx.send(embed = mbed)
+                await ctx.respond(embed = mbed)
             
         except Exception as error:
             logger.exception(error)
 
-    @commands.command(name="username")
-    async def username(self, ctx):
-        print(ctx.author)
-        print(ctx.author.display_name)
-        guild_id = 993562809231233155
-        guild = self.bot.get_guild(guild_id)
-        id = guild.get_member(ctx.author.id)
-        print(id)
-        user = self.bot.get_user(id)
-        print(id.display_name)
-
-
 def setup(client):
-    client.add_cog(Levelsys(client))
+    client.add_cog(Levels(client))
