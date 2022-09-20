@@ -17,7 +17,7 @@ if sys.platform == "linux":
         sys.exit(0)
         
 #bot intents to allow for reaction roles
-intents = discord.Intents().all()
+intents = discord.Intents(messages=True, guilds=True)
 bot = commands.Bot(command_prefix='!', intents=intents)
     
 if "mush-bot" not in os.getcwd().lower():
