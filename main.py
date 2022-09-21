@@ -17,7 +17,7 @@ if sys.platform == "linux":
         sys.exit(0)
         
 #bot intents to allow for reaction roles
-intents = discord.Intents.default()
+intents = discord.Intents().all()
 bot = commands.Bot(command_prefix='!', intents=intents)
     
 if "mush-bot" not in os.getcwd().lower():
@@ -42,7 +42,6 @@ handler = logging.FileHandler('logs/main.log')
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 handler.setFormatter(formatter)
 logger.addHandler(handler)
-logger.warning('test')
 
 #on boot function
 @bot.event
@@ -125,13 +124,19 @@ async def react_role(ctx, role: discord.Role=None, msg=None, emoji=None):
 
 @bot.event
 async def on_member_join(ctx):
-    #sends message in new members in mush, if test bot, then test server channel
+    print('join')
     try:
-        join_channel = bot.get_channel(970370019701690468)#new members chat in mush
-    except: 
-        join_channel = bot.get_channel(1002658934047383674)#new members chat in test server
+        print(bot.join_message)
+        #sends message in new members in mush, if test bot, then test server channel
+        try:
+            join_channel = bot.get_channel(970370019701690468)#new members chat in mush
+        except: 
+            join_channel = bot.get_channel(993562809994584197)#new members chat in test server
 
-    await join_channel.send(f'{ctx.mention}\n {bot.join_message}')
+        await join_channel.send(f'{ctx.mention}\n {bot.join_message}')
+    except Exception as error:
+        print(error)
+        logger.error(error)
 
 
 #----------------------TEST COMMAND----------------------#
