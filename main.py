@@ -124,18 +124,15 @@ async def react_role(ctx, role: discord.Role=None, msg=None, emoji=None):
 
 @bot.event
 async def on_member_join(ctx):
-    print('join')
     try:
-        print(bot.join_message)
         #sends message in new members in mush, if test bot, then test server channel
         try:
-            join_channel = bot.get_channel(970370019701690468)#new members chat in mush
+            join_channel = await bot.fetch_channel(970370019701690468)#new members chat in mush
         except: 
-            join_channel = bot.get_channel(993562809994584197)#new members chat in test server
+            join_channel = await bot.fetch_channel(993562809994584197)#new members chat in test server
 
         await join_channel.send(f'{ctx.mention}\n {bot.join_message}')
     except Exception as error:
-        print(error)
         logger.error(error)
 
 
