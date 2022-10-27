@@ -32,13 +32,13 @@ class EasterEggs(commands.Cog):
 		await ctx.channel.send("Head of the dinosaurs" + image)
 		await ctx.message.delete()
 
+	@commands.command(name = "potatoes")
+	async def potatoes(self, ctx):
+		image = "https://tenor.com/view/boom-bomb-car-bomb-explosion-detonate-gif-15743196"
+		await ctx.channel.send("POV: you voted Tories" + image)
+		await ctx.message.delete()
 
 
-    @commands.command(name="potatoes")
-    async def potatoes(self, ctx):
-        image = "https://tenor.com/view/boom-bomb-car-bomb-explosion-detonate-gif-15743196"
-        await ctx.channel.send("POV: you voted Tories" + image)
-        await ctx.message.delete()
 	@commands.command(name = "russianbias")
 	async def russianbias(self, ctx):
 		image = "https://tinyurl.com/4e2x43nd"
