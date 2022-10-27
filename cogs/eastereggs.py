@@ -24,13 +24,13 @@ class EasterEggs(commands.Cog):
 		await ctx.channel.send("Back Boris" + image)
 		await ctx.message.delete()
 
+	@commands.command(name = "nephew")
+	async def nephew(self, ctx):
+		image = "https://tinyurl.com/bdfmkupv"
+		await ctx.channel.send("Head of the dinosaurs" + image)
+		await ctx.message.delete()
 
 
-    @commands.command(name="nephew")
-    async def nephew(self, ctx):
-        image = "https://tinyurl.com/bdfmkupv"
-        await ctx.channel.send("Head of the dinosaurs" + image)
-        await ctx.message.delete()
 
     @commands.command(name="potatoes")
     async def potatoes(self, ctx):
