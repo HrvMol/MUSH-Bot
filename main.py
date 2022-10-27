@@ -58,15 +58,15 @@ async def on_ready():
             bot.reaction_roles.append((int(data[0]), int(data[1]), data[2].strip("\n")))
 
     #creates join_message text file if not already existing
-    async with aiofiles.open("join_message.txt", mode="a") as temp:
+    async with aiofiles.open("join_message.md", mode= "a") as temp:
         pass
 
     #reads join_message file and puts data into join_message list
-    async with aiofiles.open("join_message.txt", mode="r") as file:
+    async with aiofiles.open("join_message.md", mode= "r") as file:
         bot.join_message = await file.read()
 
     try:
-        async with aiofiles.open("help.txt", mode="r") as file:
+        async with aiofiles.open("help.md", mode= "r") as file:
             bot.help = await file.read()
     except: pass
 
