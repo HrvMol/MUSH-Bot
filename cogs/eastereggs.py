@@ -18,13 +18,13 @@ class EasterEggs(commands.Cog):
                 await ctx.channel.send("Not Tornado")
             if random.randint(0, 2500) == 1:
                 await ctx.channel.send("fuck you")
+	@commands.command(name = "best")
+	async def best(self, ctx):
+		image = "https://tinyurl.com/5yrzz5x6"
+		await ctx.channel.send("Back Boris" + image)
+		await ctx.message.delete()
 
 
-    @commands.command(name="best")
-    async def best(self, ctx):
-        image = "https://tinyurl.com/5yrzz5x6"
-        await ctx.channel.send("Back Boris" + image)
-        await ctx.message.delete()
 
     @commands.command(name="nephew")
     async def nephew(self, ctx):
