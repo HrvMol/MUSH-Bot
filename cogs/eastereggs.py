@@ -7,9 +7,10 @@ class EasterEggs(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
 
-    @commands.Cog.listener()
-    async def on_ready(self):
-        print("Easter Egg Cog Loaded")
+	@commands.Cog.listener()
+	async def on_ready(self):
+		print("Easter Egg Cog Loaded")
+
 	@commands.Cog.listener()
 	async def on_message(self, ctx):
 		print()
