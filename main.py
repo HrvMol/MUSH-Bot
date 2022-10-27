@@ -37,54 +37,9 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 
-#on boot function
-@bot.event
-async def on_ready():
-    #creates reaction_roles text file if not already existing
-    async with aiofiles.open("reaction_roles.txt", mode="a") as temp:
-        pass
-
-    #reads reaction roles file and puts data into reaction_roles list
-    async with aiofiles.open("reaction_roles.txt", mode="r") as file:
-        lines = await file.readlines()
-        for line in lines:
-            data = line.split(" ")
-            bot.reaction_roles.append((int(data[0]), int(data[1]), data[2].strip("\n")))
-
-    #creates join_message text file if not already existing
-    async with aiofiles.open("join_message.md", mode= "a") as temp:
-        pass
-
-    #reads join_message file and puts data into join_message list
-    async with aiofiles.open("join_message.md", mode= "r") as file:
-        bot.join_message = await file.read()
-
-    try:
-        async with aiofiles.open("help.md", mode= "r") as file:
-            bot.help = await file.read()
-    except: pass
-
-    print("logged in and ready")
-
-#---------------------REACTION ROLES---------------------#
 
 @bot.event
-async def on_raw_reaction_add(payload):
-    #check for if user reacting is bot so it can be ignored
-    if payload.member == bot.user:
-        return
 
-    #checks through list to see if reaction is on one of the reaction role messages
-    for role_id, msg_id, emoji in bot.reaction_roles:
-        if msg_id == payload.message_id and emoji == str(payload.emoji.name.encode("utf-8")):
-            print("adding role")
-            guild = bot.get_guild(payload.guild_id)#gets server react was in
-            await payload.member.add_roles(guild.get_role(role_id))#adds role to user that reacted
-            return
-
-@bot.event
-async def on_raw_reaction_remove(payload):
-    #check for if user reacting is bot so it can be ignored
     if payload.member == bot.user: return
     
     #checks through list to see if reaction is on one of the reaction role messages
