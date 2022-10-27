@@ -18,12 +18,10 @@ if sys.platform == "linux":
 
 # Bot intent commands for basic prefixing
 intents = discord.Intents().all()
-bot = commands.Bot(command_prefix='!', intents=intents)
-    
+bot = commands.Bot(command_prefix = '!', intents = intents)
+
 if "mush-bot" not in os.getcwd().lower():
-    os.chdir(os.getcwd()+"/mush-bot")
-
-
+	os.chdir(os.getcwd() + "/mush-bot")
 
 TOKEN = os.environ.get('BOT_TOKEN')  # Token allows to sign in to the bot account
 bot.join_message = ''
