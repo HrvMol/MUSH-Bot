@@ -83,10 +83,11 @@ async def on_member_join(ctx):
 	except Exception as error:
 		logger.error(error)
 
-#----------------------TEST COMMAND----------------------#
 
-@bot.slash_command(description="test if the bot is working")
+# ----------------------TEST COMMAND---------------------- #
+@bot.slash_command(description = "Tests if the bot is working")
 async def test(ctx):
-    await ctx.respond("Operational")
+	await ctx.respond("Operational")
+
 
 bot.run(TOKEN)
