@@ -9,15 +9,15 @@ class EasterEggs(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         print("Easter Egg Cog Loaded")
+	@commands.Cog.listener()
+	async def on_message(self, ctx):
+		print()
+		if ctx.author != self.bot.user:
+			if ctx.author.id == "407903863778312196":
+				await ctx.channel.send("Not Tornado")
+			if random.randint(0, 2500) == 1:
+				await ctx.channel.send("fuck you")
 
-    @commands.Cog.listener()
-    async def on_message(self, ctx):
-        print()
-        if ctx.author != self.bot.user:
-            if ctx.author.id == "407903863778312196":
-                await ctx.channel.send("Not Tornado")
-            if random.randint(0, 2500) == 1:
-                await ctx.channel.send("fuck you")
 	@commands.command(name = "best")
 	async def best(self, ctx):
 		image = "https://tinyurl.com/5yrzz5x6"
