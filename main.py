@@ -24,11 +24,10 @@ if "mush-bot" not in os.getcwd().lower():
     os.chdir(os.getcwd()+"/mush-bot")
 
 
-#token allows to sign in to the bot account
-TOKEN = os.environ.get('BOT_TOKEN')
 
 #list of reaction roles data
 bot.reaction_roles = []
+TOKEN = os.environ.get('BOT_TOKEN')  # Token allows to sign in to the bot account
 bot.join_message = ''
 
 #loads cogs from ./cogs folder
