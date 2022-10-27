@@ -17,7 +17,7 @@ class SrbInfo(commands.Cog):
     
     def __init__(self, bot: commands.Bot):
         self.bot = bot
-        self.bot.explaination = ''
+        self.bot.explanation = ''
         # GMT
         # self.bot.eu_srb_start = datetime.strptime("14:00:00", "%H:%M:%S")
         # self.bot.eu_srb_end = datetime.strptime("22:00:00", "%H:%M:%S")
@@ -35,15 +35,15 @@ class SrbInfo(commands.Cog):
         print("SRB Info Cog Loaded")
 
         try:
-            async with aiofiles.open("explain.txt", mode="r") as file:
-                self.bot.explaination = await file.read()
+            async with aiofiles.open("explain.md", mode="r") as file:
+                self.bot.explanation = await file.read()
         except: pass
 
-    @slash_command(description="information on SRB")
+    @slash_command(description="Information on SRB")
     async def srbinfo(self, ctx):
-        await ctx.respond(self.bot.explaination)
+        await ctx.respond(self.bot.explanation)
         
-    @slash_command(description="the time until the next SRBs")
+    @slash_command(description="The time until the next SRBs")
     async def srbwhen(self, ctx):
         try:
             def convert_to_format(td):
@@ -67,11 +67,14 @@ class SrbInfo(commands.Cog):
 
 
             if timeToEU > timeToEUEnd and int(timeToEU[:2]) > 12:
-                await ctx.respond(f'EU SRB window is currently open, closes in `{timeToEUEnd}` from now\nNext US window opens in `{timeToUS}` from now')
+                await ctx.respond(f'EU SRB window is currently open, closes in `{timeToEUEnd}` from now\n'
+                                  f'Next US window opens in `{timeToUS}` from now')
             elif timeToUS > timeToUSEnd and int(timeToUS[:2]) > 12:
-                await ctx.respond(f'US SRB window is currently open, closes in `{timeToUSEnd}` from now\nNext EU window opens in `{timeToEU}` from now')
+                await ctx.respond(f'US SRB window is currently open, closes in `{timeToUSEnd}` from now\n'
+                                  f'Next EU window opens in `{timeToEU}` from now')
             else:
-                await ctx.respond(f'Next EU window opens in `{timeToEU}` from now\nNext US window opens in `{timeToUS}` from now')
+                await ctx.respond(f'Next EU window opens in `{timeToEU}` from now\n'
+                                  f'Next US window opens in `{timeToUS}` from now')
 
         except Exception as error:
             logger.exception(error)
