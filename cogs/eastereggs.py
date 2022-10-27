@@ -38,6 +38,11 @@ class EasterEggs(commands.Cog):
 		await ctx.channel.send("POV: you voted Tories" + image)
 		await ctx.message.delete()
 
+	@commands.command(name = "salty")
+	async def salty(self, ctx):
+		image = "https://tinyurl.com/2m3reh38"
+		await ctx.channel.send("2 world wars, 1 world cup and 1 women's Euros" + image)
+		await ctx.message.delete()
 
 	@commands.command(name = "russianbias")
 	async def russianbias(self, ctx):
@@ -45,11 +50,6 @@ class EasterEggs(commands.Cog):
 		await ctx.channel.send(image)
 		await ctx.message.delete()
 
-    @commands.command(name="salty")
-    async def salty(self, ctx):
-        image = "https://tinyurl.com/2m3reh38"
-        await ctx.channel.send("2 world wars, 1 world cup and 1 women's Euros" + image)
-        await ctx.message.delete()
 	@commands.command(name = "scottsman")
 	async def scotsman(self, ctx):
 		await ctx.channel.send(
