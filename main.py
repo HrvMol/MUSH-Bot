@@ -38,36 +38,19 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 
 
+# ------------------------BOOT SETUP---------------------- #
 @bot.event
-
-    if payload.member == bot.user: return
-    
-    #checks through list to see if reaction is on one of the reaction role messages
-    for role_id, msg_id, emoji in bot.reaction_roles:
-        if msg_id == payload.message_id and emoji == str(payload.emoji.name.encode("utf-8")):
-            print("removing role")
-            guild = bot.get_guild(payload.guild_id)#gets server react was in
-            await guild.get_member(payload.user_id).remove_roles(guild.get_role(role_id))#removes role to user that reacted
-            return
-
-#command to set up the reaction role
-@bot.command()
-@commands.has_any_role("Sergeant", "Deputy Commander", "Commander", "Officer", "Discord Admin")
-async def react_role(ctx, role: discord.Role=None, msg=None, emoji=None):
-    if role != None and msg != None and emoji != None:
-        channel = ctx.channel
-        msg = await channel.send(msg)#sends message that was an arg of the function
-        await msg.add_reaction(emoji)#adds emoji to message
-        emoji_utf = str(emoji.encode("utf-8"))#encodes emoji as txt files cannot use emojis
-        bot.reaction_roles.append((role.id, msg.id, emoji_utf))#appends to runtime reaction list
-
-        async with aiofiles.open("reaction_roles.txt", mode = "a") as file:
-            await file.write(f"{role.id} {msg.id} {emoji_utf}\n")#appends the new data to text file for permanent storage
-
-    else:
-        await ctx.send("invalid arguments")
-    
-    await ctx.message.delete()#remove user command message
+async def on_ready():
+	async with aiofiles.open("join_message.md", mode = "a"):  # Creates join_message text file if not already existing
+		pass
+	async with aiofiles.open("join_message.md", mode = "r") as join_message:  # Reads join_message file and puts data into join_message list
+		bot.join_message = await join_message.read()
+	try:
+		async with aiofiles.open("help.md", mode = "r") as help_message:
+			bot.help = await help_message.read()
+	except:
+		pass
+	print("logged in and ready")
 
 
 # ---------------------WELCOME MESSAGE-------------------- #
