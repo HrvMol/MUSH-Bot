@@ -69,21 +69,19 @@ async def react_role(ctx, role: discord.Role=None, msg=None, emoji=None):
     
     await ctx.message.delete()#remove user command message
 
-#---------------------WELCOME MESSAGE--------------------#
 
+# ---------------------WELCOME MESSAGE-------------------- #
 @bot.event
 async def on_member_join(ctx):
-    try:
-        #sends message in new members in mush, if test bot, then test server channel
-        try:
-            join_channel = await bot.fetch_channel(970370019701690468)#new members chat in mush
-        except: 
-            join_channel = await bot.fetch_channel(993562809994584197)#new members chat in test server
+	try:  # Sends message in new members in mush, if test bot, then test server channel
+		try:
+			join_channel = await bot.fetch_channel(970370019701690468)  # New members chat in mush
+		except: # too broad, breaks the message sending in the right server
+			join_channel = await bot.fetch_channel(993562809994584197)  # New members chat in test server
 
-        await join_channel.send(f'{ctx.mention}\n {bot.join_message}')
-    except Exception as error:
-        logger.error(error)
-
+		await join_channel.send(f'{ctx.mention}\n {bot.join_message}')
+	except Exception as error:
+		logger.error(error)
 
 #----------------------TEST COMMAND----------------------#
 
