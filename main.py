@@ -25,8 +25,6 @@ if "mush-bot" not in os.getcwd().lower():
 
 
 
-#list of reaction roles data
-bot.reaction_roles = []
 TOKEN = os.environ.get('BOT_TOKEN')  # Token allows to sign in to the bot account
 bot.join_message = ''
 
