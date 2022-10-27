@@ -26,11 +26,10 @@ if "mush-bot" not in os.getcwd().lower():
 TOKEN = os.environ.get('BOT_TOKEN')  # Token allows to sign in to the bot account
 bot.join_message = ''
 
-#loads cogs from ./cogs folder
-for file in os.listdir('./cogs'):
-    if file.endswith('.py'):
-        bot.load_extension("cogs." + file[:-3])
 
+for file in os.listdir('./cogs'):  # Loads cogs from ./cogs folder
+	if file.endswith('.py'):
+		bot.load_extension("cogs." + file[:-3])
 logger = logging.getLogger(__name__)
 
 handler = logging.FileHandler('logs/main.log')
