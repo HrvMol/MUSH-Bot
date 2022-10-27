@@ -39,6 +39,11 @@ class EasterEggs(commands.Cog):
         image = "https://tenor.com/view/boom-bomb-car-bomb-explosion-detonate-gif-15743196"
         await ctx.channel.send("POV: you voted Tories" + image)
         await ctx.message.delete()
+	@commands.command(name = "russianbias")
+	async def russianbias(self, ctx):
+		image = "https://tinyurl.com/4e2x43nd"
+		await ctx.channel.send(image)
+		await ctx.message.delete()
 
     @commands.command(name="salty")
     async def salty(self, ctx):
@@ -51,12 +56,6 @@ class EasterEggs(commands.Cog):
 			"https://cdn.discordapp.com/attachments/987513534227316789/1003431507597205584/received_272561204831416.jpeg")
 		await ctx.message.delete()
 
-    #update 1
-    @commands.command(name="russianbias")
-    async def russianbias(self, ctx):
-        image = "https://tinyurl.com/4e2x43nd"
-        await ctx.channel.send(image)
-        await ctx.message.delete()
 	@commands.command(name = "posh")
 	async def posh(self, ctx):
 		await ctx.channel.send(
