@@ -66,4 +66,4 @@ class EasterEggs(commands.Cog):
         await ctx.message.delete()
     
 def setup(client):
-    client.add_cog(EasterEggs(client))
+	client.add_cog(EasterEggs(client))
