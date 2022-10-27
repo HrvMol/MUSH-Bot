@@ -45,6 +45,11 @@ class EasterEggs(commands.Cog):
         image = "https://tinyurl.com/2m3reh38"
         await ctx.channel.send("2 world wars, 1 world cup and 1 women's Euros" + image)
         await ctx.message.delete()
+	@commands.command(name = "scottsman")
+	async def scotsman(self, ctx):
+		await ctx.channel.send(
+			"https://cdn.discordapp.com/attachments/987513534227316789/1003431507597205584/received_272561204831416.jpeg")
+		await ctx.message.delete()
 
     #update 1
     @commands.command(name="russianbias")
@@ -58,11 +63,6 @@ class EasterEggs(commands.Cog):
 			"https://cdn.discordapp.com/attachments/987513534227316789/1005955570991370380/unknown.png")
 		await ctx.message.delete()
 
-    @commands.command(name="scottsman")
-    async def scotsman(self, ctx):
-        await ctx.channel.send(
-        "https://cdn.discordapp.com/attachments/987513534227316789/1003431507597205584/received_272561204831416.jpeg")
-        await ctx.message.delete()
 
 def setup(client):
 	client.add_cog(EasterEggs(client))
