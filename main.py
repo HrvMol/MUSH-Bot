@@ -7,16 +7,16 @@ import socket
 import logging
 
 if sys.platform == "linux":
-    try:
-        s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-        s.bind('\0postconnect_gateway_notify_lock')
-    except socket.error as e:
-        error_code = e.args[0]
-        error_string = e.args[1]
-        print("Process already running (%d:%s ). Exiting" % (error_code, error_string))
-        sys.exit(0)
-        
-#bot intents to allow for reaction roles
+	try:
+		s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+		s.bind('\0postconnect_gateway_notify_lock')
+	except socket.error as e:
+		error_code = e.args[0]
+		error_string = e.args[1]
+		print("Process already running (%d:%s ). Exiting" % (error_code, error_string))
+		sys.exit(0)
+
+# Bot intent commands for basic prefixing
 intents = discord.Intents().all()
 bot = commands.Bot(command_prefix='!', intents=intents)
     
