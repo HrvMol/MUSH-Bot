@@ -38,7 +38,7 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 
 
-# ------------------------BOOT SETUP---------------------- #
+# ------------------------BOT SETUP----------------------- #
 @bot.event
 async def on_ready():
 	async with aiofiles.open("join_message.md", mode = "a"):  # Creates join_message text file if not already existing
