@@ -1,3 +1,4 @@
+import tkinter
 import discord
 import json
 import logging
@@ -5,9 +6,9 @@ from discord import File
 from discord.ext import commands
 from discord.commands import slash_command
 from typing import Optional
-from easy_pil import Editor, load_image_async, Font
-from pillow import Image, ImageOps
+from PIL import Image, ImageOps
 import requests
+import re
 
 logger = logging.getLogger(__name__)
 handler = logging.FileHandler('logs/levels.log')
@@ -21,7 +22,7 @@ xp_per_message = 20
 
 
 class Levels(commands.Cog):
-	def __init__(self, bot):  # Initialization of .....
+	def __init__(self, bot):  # Initialization of levels command
 		self.bot = bot
 
 	@commands.Cog.listener()  # Leveling Cog loading
@@ -37,7 +38,7 @@ class Levels(commands.Cog):
 				with open("levels.json", "r") as levels:
 					data = json.load(levels)
 				if str(message.guild.id) in data:  # Checks if user is in the database
-					author = str(message.author.id) # Defines the author of the message
+					author = str(message.author.id)  # Defines the author of the message
 					if author in data[str(message.guild.id)]:  # If user is in database:
 						xp = data[str(message.guild.id)][str(message.author.id)]['xp']
 						lvl = data[str(message.guild.id)][str(message.author.id)]['level']
@@ -91,7 +92,8 @@ class Levels(commands.Cog):
 						width, height = im.size
 						if width != 900 or height != 300:
 							im = ImageOps.fit(im, (900, 300))
-					except Exception:
+					except Exception as e:
+						logging.exception(e)
 						im = standard_img
 						await ctx.respond("Warning: The image link you have chosen is invalid")
 				else:
@@ -99,8 +101,8 @@ class Levels(commands.Cog):
 				background = Editor(im)
 				profile = await load_image_async(str(user.display_avatar.url))
 				profile = Editor(profile).resize((150, 150)).circle_image()
-				poppins = Font.poppins(size = 40)
-				poppins_small = Font.poppins(size = 30)
+				poppins = tkinter.font.poppins(size = 40)
+				poppins_small = tkinter.font.poppins(size = 30)
 				ima = Editor("images/black.png")
 				background.blend(image = ima, alpha = .5, on_top = False)  # Profile picture
 				background.paste(profile.image, (30, 30))  # XP bar if empty

@@ -49,23 +49,18 @@ async def on_ready():
 	try:
 		async with aiofiles.open("help.md", mode = "r") as help_message:
 			bot.help = await help_message.read()
-	except:
+	except Exception as error:
+		logging.exception(error)
 		pass
 	print("logged in and ready")
 
 
 # ---------------------WELCOME MESSAGE-------------------- #
 @bot.event
-async def on_member_join(ctx):
-	try:  # Sends message in new members in mush, if test bot, then test server channel
-		try:
-			join_channel = await bot.fetch_channel(970370019701690468)  # New members chat in mush
-		except:  # too broad, breaks the message sending in the right server
-			join_channel = await bot.fetch_channel(993562809994584197)  # New members chat in test server
-
-		await join_channel.send(f'{ctx.mention}\n {bot.join_message}')
-	except Exception as error:
-		logger.error(error)
+async def on_member_join(member):
+	for channel in member.guild.channels:
+		if channel == 970370019701690468:
+			await channel.send(f'{member.mention}\n {bot.join_message}')
 
 
 # ----------------------TEST COMMAND---------------------- #
