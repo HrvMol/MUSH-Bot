@@ -43,7 +43,8 @@ logger.addHandler(handler)
 async def on_ready():
 	async with aiofiles.open("join_message.md", mode = "a"):  # Creates join_message text file if not already existing
 		pass
-	async with aiofiles.open("join_message.md", mode = "r") as join_message:  # Reads join_message file and puts data into join_message list
+	async with aiofiles.open("join_message.md", mode = "r") as join_message:
+		# Reads join_message file and puts data into join_message list
 		bot.join_message = await join_message.read()
 	try:
 		async with aiofiles.open("help.md", mode = "r") as help_message:
@@ -59,7 +60,7 @@ async def on_member_join(ctx):
 	try:  # Sends message in new members in mush, if test bot, then test server channel
 		try:
 			join_channel = await bot.fetch_channel(970370019701690468)  # New members chat in mush
-		except: # too broad, breaks the message sending in the right server
+		except:  # too broad, breaks the message sending in the right server
 			join_channel = await bot.fetch_channel(993562809994584197)  # New members chat in test server
 
 		await join_channel.send(f'{ctx.mention}\n {bot.join_message}')

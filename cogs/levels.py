@@ -1,4 +1,3 @@
-from pydoc import describe
 import discord
 import json
 import logging
@@ -7,11 +6,8 @@ from discord.ext import commands
 from discord.commands import slash_command
 from typing import Optional
 from easy_pil import Editor, load_image_async, Font
-
-from PIL import Image, ImageOps
+from pillow import Image, ImageOps
 import requests
-
-import re
 
 logger = logging.getLogger(__name__)
 handler = logging.FileHandler('logs/levels.log')
@@ -90,12 +86,12 @@ class Levels(commands.Cog):
 				xp_have = data[str(ctx.guild.id)][str(user.id)]["xp"]
 				percentage = int((xp_have * 100) / next_levelup_xp)
 				if url.startswith("http"):  # Checks for http in the image link
-					try:  # Tests the image code
+					try:  # Tests the image link
 						im = Image.open(requests.get(url, stream = True).raw)
 						width, height = im.size
 						if width != 900 or height != 300:
 							im = ImageOps.fit(im, (900, 300))
-					except:
+					except Exception:
 						im = standard_img
 						await ctx.respond("Warning: The image link you have chosen is invalid")
 				else:
