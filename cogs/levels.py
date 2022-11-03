@@ -6,6 +6,7 @@ from discord import File
 from discord.ext import commands
 from discord.commands import slash_command
 from typing import Optional
+from easy_pil import Editor, load_image_async, Font
 from PIL import Image, ImageOps
 import requests
 import re
