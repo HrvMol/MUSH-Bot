@@ -17,5 +17,6 @@ class Moderation(commands.Cog):
         i = await ctx.channel.purge(limit = messages)
         await ctx.respond(f'I have purged {len(i)} messages')
 
+
 def setup(client):
     client.add_cog(Moderation(client))
