@@ -13,7 +13,8 @@ class Moderation(commands.Cog):
 
     @slash_command(description="remove a certain number of messages")
     @commands.has_permissions(manage_messages = True)
-    async def purge(self, ctx, messages: Option(int, description="How may messages do you want to purge?", requires=True)):
+    async def purge(self, ctx, messages: Option(int, description="How may messages do you want to purge?",
+                                                requires=True)):
         i = await ctx.channel.purge(limit = messages)
         await ctx.respond(f'I have purged {len(i)} messages')
 
