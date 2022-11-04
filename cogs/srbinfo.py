@@ -1,6 +1,4 @@
 import logging
-from pydoc import describe
-import discord
 from discord.ext import commands
 from discord.commands import slash_command
 import aiofiles
@@ -12,6 +10,7 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 logger.setLevel('INFO')
+
 
 class SrbInfo(commands.Cog):
     
@@ -65,7 +64,6 @@ class SrbInfo(commands.Cog):
             timeToUS = datetime.strftime(convert_to_format(timeToUS), "%H:%M:%S")
             timeToUSEnd = datetime.strftime(convert_to_format(timeToUSEnd), "%H:%M:%S")
 
-
             if timeToEU > timeToEUEnd and int(timeToEU[:2]) > 12:
                 await ctx.respond(f'EU SRB window is currently open, closes in `{timeToEUEnd}` from now\n'
                                   f'Next US window opens in `{timeToUS}` from now')
@@ -78,7 +76,6 @@ class SrbInfo(commands.Cog):
 
         except Exception as error:
             logger.exception(error)
-
 
 
 def setup(client):
