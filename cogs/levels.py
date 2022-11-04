@@ -1,10 +1,9 @@
-import tkinter
 import discord
-import json
-import logging
 from discord import File
 from discord.ext import commands
 from discord.commands import slash_command
+import json
+import logging
 from typing import Optional
 from easy_pil import Editor, load_image_async, Font
 from PIL import Image, ImageOps
@@ -102,8 +101,8 @@ class Levels(commands.Cog):
 				background = Editor(im)
 				profile = await load_image_async(str(user.display_avatar.url))
 				profile = Editor(profile).resize((150, 150)).circle_image()
-				poppins = tkinter.font.poppins(size = 40)
-				poppins_small = tkinter.font.poppins(size = 30)
+				poppins = Font.poppins(size = 40)
+				poppins_small = Font.poppins(size = 30)
 				ima = Editor("images/black.png")
 				background.blend(image = ima, alpha = .5, on_top = False)  # Profile picture
 				background.paste(profile.image, (30, 30))  # XP bar if empty
