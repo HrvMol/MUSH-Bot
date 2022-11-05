@@ -1,6 +1,6 @@
+import discord
 from discord import Option
 from discord.ext import commands
-from discord.commands import slash_command
 
 
 class Moderation(commands.Cog):
@@ -11,7 +11,7 @@ class Moderation(commands.Cog):
     async def on_ready(self):
         print("Moderation Cog Loaded")
 
-    @slash_command(description="remove a certain number of messages")
+    @discord.slash_command(description="remove a certain number of messages")
     @commands.has_permissions(manage_messages = True)
     async def purge(self, ctx, messages: Option(int, description="How may messages do you want to purge?",
                                                 requires=True)):
