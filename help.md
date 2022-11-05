@@ -19,6 +19,6 @@ These commands are for ensuring the bot in working
 
 __staff only__
 These commands are limeted to staff members only
-!react_role - creates a reaction role. !react_role [role] [message] [emoji]
+!react_role - creates a reaction role. !react_role [role] [message] [emoji]  
 !activity - show people who haven't listened to pings
 ```
