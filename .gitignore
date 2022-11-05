@@ -4,3 +4,4 @@ levels.json
 *.pyc
 .env
 *.pyc
+*.pyc
