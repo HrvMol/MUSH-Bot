@@ -20,7 +20,7 @@ if sys.platform == "linux":
 		sys.exit(0)
 
 # Bot intent commands for basic prefixing
-bot = discord.Bot()
+bot = discord.Bot(command_prefix='.')
 
 if "mush-bot" not in os.getcwd().lower():
 	os.chdir(os.getcwd() + "/mush-bot")
