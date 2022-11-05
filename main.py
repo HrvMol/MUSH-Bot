@@ -1,10 +1,10 @@
+import logging
+import os
+import socket
+import sys
 import aiofiles
 import discord
 from discord.ext import commands
-import os
-import sys
-import socket
-import logging
 
 if sys.platform == "linux":
 	try:
@@ -18,7 +18,7 @@ if sys.platform == "linux":
 
 # Bot intent commands for basic prefixing
 intents = discord.Intents().all()
-bot = commands.Bot(command_prefix = '!', intents = intents)
+bot = commands.Bot()
 
 if "mush-bot" not in os.getcwd().lower():
 	os.chdir(os.getcwd() + "/mush-bot")
