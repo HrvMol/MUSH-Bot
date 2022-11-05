@@ -18,5 +18,5 @@ class Moderation(discord.Cog):
         await ctx.respond(f'I have purged {len(i)} messages')
 
 
-def setup(client):
-    client.add_cog(Moderation(client))
+def setup(bot):
+    bot.add_cog(Moderation(bot))
