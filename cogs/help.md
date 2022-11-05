@@ -6,13 +6,13 @@ Commands:
 	Gives the time to the SRB window for both the NA and EU windows open and close times, relative to the time the command was called.
 /srbinfo
 	(text goes here because Taco cant code)
-!best
-!nephew
-!posh
-!potatoes
-!russianbias
-!salty
-!scotsman
+/best
+/nephew
+/posh
+/potatoes
+/russianbias
+/salty
+/scotsman
 ```
 Diagnostic:
 These commands are for ensuring the bot in working
