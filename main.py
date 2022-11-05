@@ -4,7 +4,10 @@ import socket
 import sys
 import aiofiles
 import discord
-from discord.ext import commands
+from dotenv import load_dotenv
+
+load_dotenv()
+token = str(os.getenv("TOKEN"))
 
 if sys.platform == "linux":
 	try:
@@ -17,8 +20,7 @@ if sys.platform == "linux":
 		sys.exit(0)
 
 # Bot intent commands for basic prefixing
-intents = discord.Intents().all()
-bot = commands.Bot()
+bot = discord.Bot()
 
 if "mush-bot" not in os.getcwd().lower():
 	os.chdir(os.getcwd() + "/mush-bot")
@@ -64,7 +66,7 @@ async def on_member_join(member):
 
 
 # ----------------------TEST COMMAND---------------------- #
-@bot.slash_command(name = "Test", description = "Tests if the bot is working")
+@bot.command(name = "Test", description = "Tests if the bot is working")
 async def test(ctx):
 	await ctx.respond("Bot is operational")
 
