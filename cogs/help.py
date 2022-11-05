@@ -1,24 +1,19 @@
 import discord
-from discord import commands
-from discord import Option
-
-bot = discord.Bot(command_prefix='!')
 
 
-class MyHelp(commands.HelpCommand):
-    def get_command_signature(self, command):
-        return '%s%s %s' % (self.context.clean_prefix, command.qualified_name, command.signature)
+class Help(discord.Cog):
+    def __init__(self, bot: discord.Bot):
+        self.bot = bot
 
-    async def send_cog_help(self, cog):
-        embed = discord.Embed(title=cog.qualified_name or "No Category", description=cog.description,
-                              color=discord.Color.blurple())
+    @discord.Cog.listener()
+    async def on_ready(self):
+        print("Help Cog Loaded")
 
-        if filtered_commands := await self.filter_commands(cog.get_commands()):
-            for command in filtered_commands:
-                embed.add_field(name=self.get_command_signature(command), value=command.help or "No Help Message "
-                                                                                                "Found... ")
-
-        await self.get_destination().send(embed=embed)
+    @discord.slash_command(description="Help command for the bot")
+    # @discord.has_permissions(manage_messages = True)
+    async def help(self, ctx):
+        await ctx.respond(self.bot.help)
 
 
-bot.help_command = MyHelp()
+def setup(bot):
+    bot.add_cog(Help(bot))
