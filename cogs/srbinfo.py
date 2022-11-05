@@ -11,23 +11,24 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 logger.setLevel('INFO')
 
+# GMT
+eu_srb_start = datetime.strptime("14:00:00", "%H:%M:%S")
+eu_srb_end = datetime.strptime("22:00:00", "%H:%M:%S")
+us_srb_start = datetime.strptime("01:00:00", "%H:%M:%S")
+us_srb_end = datetime.strptime("07:00:00", "%H:%M:%S")
+
+
+# BST
+# self.bot.eu_srb_start = datetime.strptime("15:00:00", "%H:%M:%S")
+# self.bot.eu_srb_end = datetime.strptime("23:00:00", "%H:%M:%S")
+# self.bot.us_srb_start = datetime.strptime("02:00:00", "%H:%M:%S")
+# self.bot.us_srb_end = datetime.strptime("08:00:00", "%H:%M:%S")
 
 class SrbInfo(commands.Cog):
-    
+
     def __init__(self, bot: commands.Bot):
         self.bot = bot
         self.bot.explanation = ''
-        # GMT
-        self.bot.eu_srb_start = datetime.strptime("14:00:00", "%H:%M:%S")
-        self.bot.eu_srb_end = datetime.strptime("22:00:00", "%H:%M:%S")
-        self.bot.us_srb_start = datetime.strptime("01:00:00", "%H:%M:%S")
-        self.bot.us_stb_end = datetime.strptime("07:00:00", "%H:%M:%S")
-
-        # BST
-        # self.bot.eu_srb_start = datetime.strptime("15:00:00", "%H:%M:%S")
-        # self.bot.eu_srb_end = datetime.strptime("23:00:00", "%H:%M:%S")
-        # self.bot.us_srb_start = datetime.strptime("02:00:00", "%H:%M:%S")
-        # self.bot.us_srb_end = datetime.strptime("08:00:00", "%H:%M:%S")
 
     @commands.Cog.listener()
     async def on_ready(self):
@@ -39,11 +40,11 @@ class SrbInfo(commands.Cog):
         except:
             pass
 
-    @slash_command(description="Information on SRB")
+    @slash_command(name = "SRB Info", description="Information on SRB")
     async def srbinfo(self, ctx):
         await ctx.respond(self.bot.explanation)
-        
-    @slash_command(description="The time until the next SRBs")
+
+    @slash_command(name = "SRB When", description="The time until the next SRBs")
     async def srbwhen(self, ctx):
         try:
             def convert_to_format(td):
@@ -55,10 +56,10 @@ class SrbInfo(commands.Cog):
             current_time = now.strftime("%H:%M:%S")
             format_current = datetime.strptime(current_time, "%H:%M:%S")
 
-            time_to_eu = (self.bot.eu_srb_start - format_current) + timedelta(days=1)
-            time_to_eu_end = (self.bot.eu_srb_end - format_current)
-            time_to_us = (self.bot.us_srb_start - format_current) + timedelta(days=1)
-            time_to_us_end = (self.bot.us_srb_end - format_current)
+            time_to_eu = (eu_srb_start - format_current) + timedelta(days=1)
+            time_to_eu_end = (eu_srb_end - format_current)
+            time_to_us = (us_srb_start - format_current) + timedelta(days=1)
+            time_to_us_end = (us_srb_end - format_current)
 
             time_to_eu = datetime.strftime(convert_to_format(time_to_eu), "%H:%M:%S")
             time_to_eu_end = datetime.strftime(convert_to_format(time_to_eu_end), "%H:%M:%S")
