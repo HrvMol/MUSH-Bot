@@ -57,7 +57,7 @@ class EasterEggs(discord.Cog):  # Creates a class for the cog that inherits from
 			"https://cdn.discordapp.com/attachments/987513534227316789/1003431507597205584/received_272561204831416.jpeg")
 		await ctx.message.delete()
 
-	@discord.command(name = "posh")  # Creates a prefixed command
+	@discord.slash_command(name = "posh")  # Creates a prefixed command
 	async def posh(self, ctx):
 		await ctx.channel.send(
 			"https://cdn.discordapp.com/attachments/987513534227316789/1005955570991370380/unknown.png")
