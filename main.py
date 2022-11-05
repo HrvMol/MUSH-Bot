@@ -28,10 +28,18 @@ if "mush-bot" not in os.getcwd().lower():
 TOKEN = os.environ.get('BOT_TOKEN')  # Token allows to sign in to the bot account
 bot.join_message = ''
 
+cogs_list = []
 
-for file in os.listdir('./cogs'):  # Loads cogs from ./cogs folder
-	if file.endswith('.py'):
-		bot.load_extension("cogs." + file[:-3])
+for cog in os.listdir('./cogs'):  # Loads cogs from ./cogs folder
+	if cog.endswith('.py'):
+		cog = os.path.splitext(cog)
+		cog = cog[0]
+		cogs_list.append(cog)
+
+bot.load_extension('cogs.levels')
+for cog in cogs_list:
+	bot.load_extension(f'cogs.{cog}')
+
 logger = logging.getLogger(__name__)
 
 handler = logging.FileHandler('logs/main.log')
@@ -54,7 +62,7 @@ async def on_ready():
 	except Exception as error:
 		logging.exception(error)
 		pass
-	print("logged in and ready")
+	print("Logged in and ready")
 
 
 # ---------------------WELCOME MESSAGE-------------------- #
@@ -66,9 +74,8 @@ async def on_member_join(member):
 
 
 # ----------------------TEST COMMAND---------------------- #
-@bot.command(name = "Test", description = "Tests if the bot is working")
+@bot.slash_command(name = "Test", description = "Tests if the bot is working")
 async def test(ctx):
 	await ctx.respond("Bot is operational")
-
 
 bot.run(TOKEN)
