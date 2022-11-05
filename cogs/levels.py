@@ -1,7 +1,5 @@
 import discord
-from discord import File
 from discord.ext import commands
-from discord.commands import slash_command
 import json
 import logging
 from typing import Optional
@@ -21,16 +19,16 @@ standard_img = "images/tam.png"
 xp_per_message = 20
 
 
-class Levels(commands.Cog):
+class Levels(discord.Cog):
 	def __init__(self, bot):  # Initialization of levels command
 		self.bot = bot
 
-	@commands.Cog.listener()  # Leveling Cog loading
+	@discord.Cog.listener()  # Leveling Cog loading
 	async def on_ready(self):
 		print("Levelling Cog Loaded")
 		logger.info('Levelling Cog Loaded')
 
-	@commands.Cog.listener()
+	@discord.Cog.listener()
 	async def on_message(self, message):
 		try:
 			logger.info('started message')
@@ -71,7 +69,7 @@ class Levels(commands.Cog):
 		except Exception as error:  # Catch
 			logger.exception(error)
 
-	@slash_command(description = "Shows the rank of a user.")
+	@discord.slash_command(description = "Shows the rank of a user.")
 	async def rank(self, ctx: commands.Context, member: Optional[discord.Member]):
 		print('rank')
 		try:
@@ -131,7 +129,7 @@ class Levels(commands.Cog):
 		except Exception as error:
 			logger.error(error)
 
-	@slash_command(description = "Change the image used in the /rank command.")
+	@discord.slash_command(description = "Change the image used in the /rank command.")
 	async def image(self, ctx, url):
 		try:
 			logger.info('started image')
@@ -145,7 +143,7 @@ class Levels(commands.Cog):
 			await ctx.respond("Unknown Error")
 			logger.exception(error)
 
-	@slash_command(description = "Change the color used in the rank command")
+	@discord.slash_command(description = "Change the color used in the rank command")
 	async def color(self, ctx, set_color):
 		try:
 			logger.info('started color')
@@ -166,7 +164,7 @@ class Levels(commands.Cog):
 		except Exception as error:
 			logger.exception(error)
 
-	@slash_command(description = "Shows the leaderboard.")
+	@discord.slash_command(description = "Shows the leaderboard.")
 	async def leaderboard(self, ctx, range_num = '10'):
 		try:
 			logger.info('started leaderboard')
