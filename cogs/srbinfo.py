@@ -1,8 +1,8 @@
 import logging
 import discord
+from discord.ext import commands
 import aiofiles
 from datetime import datetime, timedelta
-
 
 logger = logging.getLogger(__name__)
 handler = logging.FileHandler('logs/srbinfo.log')
@@ -40,11 +40,11 @@ class SrbInfo(commands.Cog):
         except:
             pass
 
-    @slash_command(name = "SRB Info", description="Information on SRB")
+    @discord.slash_command(name = "srbinfo", description="Information on SRB")
     async def srbinfo(self, ctx):
         await ctx.respond(self.bot.explanation)
 
-    @slash_command(name = "SRB When", description="The time until the next SRBs")
+    @discord.slash_command(name = "srbwhen", description="The time until the next SRBs")
     async def srbwhen(self, ctx):
         try:
             def convert_to_format(td):
