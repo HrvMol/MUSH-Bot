@@ -56,7 +56,7 @@ async def on_ready():
 		# Reads join_message file and puts data into join_message list
 		bot.join_message = await join_message.read()
 	try:
-		async with aiofiles.open("help.md", mode = "r") as help_message:
+		async with aiofiles.open("cogs/help.md", mode = "r") as help_message:
 			bot.help = await help_message.read()
 	except Exception as error:
 		logging.exception(error)
