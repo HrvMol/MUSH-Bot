@@ -35,7 +35,7 @@ class SrbInfo(commands.Cog):
         print("SRB Info Cog Loaded")
 
         try:
-            async with aiofiles.open("explain.md", mode="r") as file:
+            async with aiofiles.open("explain.md", mode= "r") as file:
                 self.bot.explanation = await file.read()
         except:
             pass
