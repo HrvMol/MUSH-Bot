@@ -21,7 +21,7 @@ class EasterEggs(discord.Cog):  # Creates a class for the cog that inherits from
 			if random.randint(0, 2500) == 1:
 				await ctx.channel.send("fuck you")
 
-	@discord.slash_command(name = "best")  # Creates a prefixed command
+	@discord.slash_command(name = "best")  # Creates a slash command
 	async def best(self, ctx):
 		image = "https://tinyurl.com/5yrzz5x6"
 		await ctx.channel.send("Back Boris")
