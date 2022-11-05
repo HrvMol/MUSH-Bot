@@ -36,7 +36,6 @@ for cog in os.listdir('./cogs'):  # Loads cogs from ./cogs folder
 		cog = cog[0]
 		cogs_list.append(cog)
 
-bot.load_extension('cogs.levels')
 for cog in cogs_list:
 	bot.load_extension(f'cogs.{cog}')
 
@@ -74,8 +73,8 @@ async def on_member_join(member):
 
 
 # ----------------------TEST COMMAND---------------------- #
-@bot.slash_command(name = "Test", description = "Tests if the bot is working")
+@discord.slash_command(name = "test", description = "Tests if the bot is working")
 async def test(ctx):
 	await ctx.respond("Bot is operational")
 
-bot.run(TOKEN)
+bot.run(token)
