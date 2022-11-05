@@ -18,6 +18,7 @@ EU
 	CDT: 09:00 - 17:00 (5 PM)
 	MDT: 08:00 - 16:00 (4 PM)
 	PDT: 07:00 - 15:00 (3 PM)
+	<t:1667656800> - <t:1667685600:t>
 
 US
 	GMT/UTC: 01:00 - 07:00
@@ -27,5 +28,6 @@ US
 	CDT: 19:00 (8 PM) - 02:00 (2 AM)
 	MDT: 18:00 (7 PM) - 01:00 (1 AM)
 	PDT: 17:00 (6 PM) - 00:00 (12 AM)
+	<t:1667696400:t> - <t:1667631600:t>
 ```
 We will call through the #srb-signup channel. Keep your notifications on.
