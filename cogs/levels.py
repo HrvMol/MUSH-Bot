@@ -23,10 +23,10 @@ class Levels(discord.Cog):
 	def __init__(self, bot):  # Initialization of levels command
 		self.bot = bot
 
-	@discord.Cog.listener()  # Leveling Cog loading
-	async def on_ready(self):
-		print("Levelling Cog Loaded")
-		logger.info('Levelling Cog Loaded')
+	@discord.Cog.listener()  # Leveling Cog loader
+	async def on_ready(self):  # When ready do:
+		print("Levelling Cog Loaded")  # Prints "Levelling Cog Loaded" to the console
+		logger.info('Levelling Cog Loaded')  # Stores the cogs load time in the log file
 
 	@discord.Cog.listener()
 	async def on_message(self, message):
@@ -69,7 +69,7 @@ class Levels(discord.Cog):
 		except Exception as error:  # Catch
 			logger.exception(error)
 
-	@discord.slash_command(description = "Shows the rank of a user.")
+	@discord.slash_command(name = "rank", description = "Shows the rank of a user.")
 	async def rank(self, ctx: commands.Context, member: Optional[discord.Member]):
 		print('rank')
 		try:
@@ -129,7 +129,7 @@ class Levels(discord.Cog):
 		except Exception as error:
 			logger.error(error)
 
-	@discord.slash_command(description = "Change the image used in the /rank command.")
+	@discord.slash_command(name = "image", description = "Change the image used in the /rank command.")
 	async def image(self, ctx, url):
 		try:
 			logger.info('started image')
@@ -143,7 +143,7 @@ class Levels(discord.Cog):
 			await ctx.respond("Unknown Error")
 			logger.exception(error)
 
-	@discord.slash_command(description = "Change the color used in the rank command")
+	@discord.slash_command(name = "color", description = "Change the color used in the rank command")
 	async def color(self, ctx, set_color):
 		try:
 			logger.info('started color')
@@ -164,10 +164,10 @@ class Levels(discord.Cog):
 		except Exception as error:
 			logger.exception(error)
 
-	@discord.slash_command(description = "Shows the leaderboard.")
+	@discord.slash_command(name = "leaderboard", description = "Shows the leaderboard.")
 	async def leaderboard(self, ctx, range_num = '10'):
+		logger.info('Leaderboard opened')
 		try:
-			logger.info('started leaderboard')
 			with open("levels.json", "r") as f:
 				data = json.load(f)
 				l = {}
@@ -209,5 +209,5 @@ class Levels(discord.Cog):
 			logger.exception(error)
 
 
-def setup(client):
-	client.add_cog(Levels(client))
+def setup(bot):
+	bot.add_cog(Levels(bot))
