@@ -18,16 +18,16 @@ class SrbInfo(commands.Cog):
         self.bot = bot
         self.bot.explanation = ''
         # GMT
-        # self.bot.eu_srb_start = datetime.strptime("14:00:00", "%H:%M:%S")
-        # self.bot.eu_srb_end = datetime.strptime("22:00:00", "%H:%M:%S")
-        # self.bot.us_srb_start = datetime.strptime("01:00:00", "%H:%M:%S")
-        # self.bot.us_stb_end = datetime.strptime("07:00:00", "%H:%M:%S")
+        self.bot.eu_srb_start = datetime.strptime("14:00:00", "%H:%M:%S")
+        self.bot.eu_srb_end = datetime.strptime("22:00:00", "%H:%M:%S")
+        self.bot.us_srb_start = datetime.strptime("01:00:00", "%H:%M:%S")
+        self.bot.us_stb_end = datetime.strptime("07:00:00", "%H:%M:%S")
 
         # BST
-        self.bot.eu_srb_start = datetime.strptime("15:00:00", "%H:%M:%S")
-        self.bot.eu_srb_end = datetime.strptime("23:00:00", "%H:%M:%S")
-        self.bot.us_srb_start = datetime.strptime("02:00:00", "%H:%M:%S")
-        self.bot.us_srb_end = datetime.strptime("08:00:00", "%H:%M:%S")
+        # self.bot.eu_srb_start = datetime.strptime("15:00:00", "%H:%M:%S")
+        # self.bot.eu_srb_end = datetime.strptime("23:00:00", "%H:%M:%S")
+        # self.bot.us_srb_start = datetime.strptime("02:00:00", "%H:%M:%S")
+        # self.bot.us_srb_end = datetime.strptime("08:00:00", "%H:%M:%S")
 
     @commands.Cog.listener()
     async def on_ready(self):
@@ -36,7 +36,8 @@ class SrbInfo(commands.Cog):
         try:
             async with aiofiles.open("explain.md", mode="r") as file:
                 self.bot.explanation = await file.read()
-        except: pass
+        except:
+            pass
 
     @slash_command(description="Information on SRB")
     async def srbinfo(self, ctx):
@@ -54,25 +55,25 @@ class SrbInfo(commands.Cog):
             current_time = now.strftime("%H:%M:%S")
             format_current = datetime.strptime(current_time, "%H:%M:%S")
 
-            timeToEU = (self.bot.eu_srb_start - format_current) + timedelta(days=1)
-            timeToEUEnd = (self.bot.eu_srb_end - format_current)
-            timeToUS = (self.bot.us_srb_start - format_current) + timedelta(days=1)
-            timeToUSEnd = (self.bot.us_srb_end - format_current)
+            time_to_eu = (self.bot.eu_srb_start - format_current) + timedelta(days=1)
+            time_to_eu_end = (self.bot.eu_srb_end - format_current)
+            time_to_us = (self.bot.us_srb_start - format_current) + timedelta(days=1)
+            time_to_us_end = (self.bot.us_srb_end - format_current)
 
-            timeToEU = datetime.strftime(convert_to_format(timeToEU), "%H:%M:%S")
-            timeToEUEnd = datetime.strftime(convert_to_format(timeToEUEnd), "%H:%M:%S")
-            timeToUS = datetime.strftime(convert_to_format(timeToUS), "%H:%M:%S")
-            timeToUSEnd = datetime.strftime(convert_to_format(timeToUSEnd), "%H:%M:%S")
+            time_to_eu = datetime.strftime(convert_to_format(time_to_eu), "%H:%M:%S")
+            time_to_eu_end = datetime.strftime(convert_to_format(time_to_eu_end), "%H:%M:%S")
+            time_to_us = datetime.strftime(convert_to_format(time_to_us), "%H:%M:%S")
+            time_to_us_end = datetime.strftime(convert_to_format(time_to_us_end), "%H:%M:%S")
 
-            if timeToEU > timeToEUEnd and int(timeToEU[:2]) > 12:
-                await ctx.respond(f'EU SRB window is currently open, closes in `{timeToEUEnd}` from now\n'
-                                  f'Next US window opens in `{timeToUS}` from now')
-            elif timeToUS > timeToUSEnd and int(timeToUS[:2]) > 12:
-                await ctx.respond(f'US SRB window is currently open, closes in `{timeToUSEnd}` from now\n'
-                                  f'Next EU window opens in `{timeToEU}` from now')
+            if time_to_eu > time_to_eu_end and int(time_to_eu[:2]) > 12:
+                await ctx.respond(f'EU SRB window is currently open, closes in `{time_to_eu_end}` from now\n'
+                                  f'Next US window opens in `{time_to_us}` from now')
+            elif time_to_us > time_to_us_end and int(time_to_us[:2]) > 12:
+                await ctx.respond(f'US SRB window is currently open, closes in `{time_to_us_end}` from now\n'
+                                  f'Next EU window opens in `{time_to_eu}` from now')
             else:
-                await ctx.respond(f'Next EU window opens in `{timeToEU}` from now\n'
-                                  f'Next US window opens in `{timeToUS}` from now')
+                await ctx.respond(f'Next EU window opens in `{time_to_eu}` from now\n'
+                                  f'Next US window opens in `{time_to_us}` from now')
 
         except Exception as error:
             logger.exception(error)
