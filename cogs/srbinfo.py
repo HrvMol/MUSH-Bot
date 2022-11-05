@@ -1,8 +1,8 @@
 import logging
-from discord.ext import commands
-from discord.commands import slash_command
+import discord
 import aiofiles
 from datetime import datetime, timedelta
+
 
 logger = logging.getLogger(__name__)
 handler = logging.FileHandler('logs/srbinfo.log')
