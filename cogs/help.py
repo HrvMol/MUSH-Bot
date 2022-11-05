@@ -10,7 +10,6 @@ class Help(discord.Cog):
         print("Help Cog Loaded")
 
     @discord.slash_command(description="Help command for the bot")
-    # @discord.has_permissions(manage_messages = True)
     async def help(self, ctx):
         await ctx.respond(self.bot.help)
 
