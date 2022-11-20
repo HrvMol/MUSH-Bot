@@ -1,10 +1,7 @@
-import tkinter
 import discord
+from discord.ext import commands
 import json
 import logging
-from discord import File
-from discord.ext import commands
-from discord.commands import slash_command
 from typing import Optional
 from easy_pil import Editor, load_image_async, Font
 from PIL import Image, ImageOps
@@ -22,16 +19,16 @@ standard_img = "images/tam.png"
 xp_per_message = 20
 
 
-class Levels(commands.Cog):
+class Levels(discord.Cog):
 	def __init__(self, bot):  # Initialization of levels command
 		self.bot = bot
 
-	@commands.Cog.listener()  # Leveling Cog loading
-	async def on_ready(self):
-		print("Levelling Cog Loaded")
-		logger.info('Levelling Cog Loaded')
+	@discord.Cog.listener()  # Leveling Cog loader
+	async def on_ready(self):  # When ready do:
+		print("Levelling Cog Loaded")  # Prints "Levelling Cog Loaded" to the console
+		logger.info('Levelling Cog Loaded')  # Stores the cogs load time in the log file
 
-	@commands.Cog.listener()
+	@discord.Cog.listener()
 	async def on_message(self, message):
 		try:
 			logger.info('started message')
@@ -72,7 +69,7 @@ class Levels(commands.Cog):
 		except Exception as error:  # Catch
 			logger.exception(error)
 
-	@slash_command(description = "Shows the rank of a user.")
+	@discord.slash_command(name = "rank", description = "Shows the rank of a user.")
 	async def rank(self, ctx: commands.Context, member: Optional[discord.Member]):
 		print('rank')
 		try:
@@ -102,8 +99,8 @@ class Levels(commands.Cog):
 				background = Editor(im)
 				profile = await load_image_async(str(user.display_avatar.url))
 				profile = Editor(profile).resize((150, 150)).circle_image()
-				poppins = tkinter.font.poppins(size = 40)
-				poppins_small = tkinter.font.poppins(size = 30)
+				poppins = Font.poppins(size = 40)
+				poppins_small = Font.poppins(size = 30)
 				ima = Editor("images/black.png")
 				background.blend(image = ima, alpha = .5, on_top = False)  # Profile picture
 				background.paste(profile.image, (30, 30))  # XP bar if empty
@@ -132,7 +129,7 @@ class Levels(commands.Cog):
 		except Exception as error:
 			logger.error(error)
 
-	@slash_command(description = "Change the image used in the /rank command.")
+	@discord.slash_command(name = "image", description = "Change the image used in the /rank command.")
 	async def image(self, ctx, url):
 		try:
 			logger.info('started image')
@@ -146,7 +143,7 @@ class Levels(commands.Cog):
 			await ctx.respond("Unknown Error")
 			logger.exception(error)
 
-	@slash_command(description = "Change the color used in the rank command")
+	@discord.slash_command(name = "color", description = "Change the color used in the rank command")
 	async def color(self, ctx, set_color):
 		try:
 			logger.info('started color')
@@ -167,10 +164,10 @@ class Levels(commands.Cog):
 		except Exception as error:
 			logger.exception(error)
 
-	@slash_command(description = "Shows the leaderboard.")
+	@discord.slash_command(name = "leaderboard", description = "Shows the leaderboard.")
 	async def leaderboard(self, ctx, range_num = '10'):
+		logger.info('Leaderboard opened')
 		try:
-			logger.info('started leaderboard')
 			with open("levels.json", "r") as f:
 				data = json.load(f)
 				l = {}
@@ -212,5 +209,5 @@ class Levels(commands.Cog):
 			logger.exception(error)
 
 
-def setup(client):
-	client.add_cog(Levels(client))
+def setup(bot):
+	bot.add_cog(Levels(bot))

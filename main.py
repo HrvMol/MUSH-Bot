@@ -1,10 +1,13 @@
+import logging
+import os
+import socket
+import sys
 import aiofiles
 import discord
-from discord.ext import commands
-import os
-import sys
-import socket
-import logging
+from dotenv import load_dotenv
+
+load_dotenv()
+token = str(os.getenv("TOKEN"))
 
 if sys.platform == "linux":
 	try:
@@ -17,8 +20,7 @@ if sys.platform == "linux":
 		sys.exit(0)
 
 # Bot intent commands for basic prefixing
-intents = discord.Intents().all()
-bot = commands.Bot(command_prefix = '!', intents = intents)
+bot = discord.Bot(command_prefix='.')
 
 if "mush-bot" not in os.getcwd().lower():
 	os.chdir(os.getcwd() + "/mush-bot")
@@ -26,10 +28,17 @@ if "mush-bot" not in os.getcwd().lower():
 TOKEN = os.environ.get('BOT_TOKEN')  # Token allows to sign in to the bot account
 bot.join_message = ''
 
+cogs_list = []
 
-for file in os.listdir('./cogs'):  # Loads cogs from ./cogs folder
-	if file.endswith('.py'):
-		bot.load_extension("cogs." + file[:-3])
+for cog in os.listdir('./cogs'):  # Loads cogs from ./cogs folder
+	if cog.endswith('.py'):
+		cog = os.path.splitext(cog)
+		cog = cog[0]
+		cogs_list.append(cog)
+
+for cog in cogs_list:
+	bot.load_extension(f'cogs.{cog}')
+
 logger = logging.getLogger(__name__)
 
 handler = logging.FileHandler('logs/main.log')
@@ -47,12 +56,12 @@ async def on_ready():
 		# Reads join_message file and puts data into join_message list
 		bot.join_message = await join_message.read()
 	try:
-		async with aiofiles.open("help.md", mode = "r") as help_message:
+		async with aiofiles.open("cogs/help.md", mode = "r") as help_message:
 			bot.help = await help_message.read()
 	except Exception as error:
 		logging.exception(error)
 		pass
-	print("logged in and ready")
+	print("Logged in and ready")
 
 
 # ---------------------WELCOME MESSAGE-------------------- #
@@ -64,9 +73,8 @@ async def on_member_join(member):
 
 
 # ----------------------TEST COMMAND---------------------- #
-@bot.slash_command(description = "Tests if the bot is working")
+@discord.slash_command(name = "test", description = "Tests if the bot is working")
 async def test(ctx):
-	await ctx.respond("Operational")
+	await ctx.respond("Bot is operational")
 
-
-bot.run(TOKEN)
+bot.run(token)
