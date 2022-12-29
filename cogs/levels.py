@@ -69,6 +69,7 @@ class Levels(discord.Cog):
 		except Exception as error:  # Catch
 			logger.exception(error)
 
+	# noinspection PyTypeChecker
 	@discord.slash_command(name = "rank", description = "Shows the rank of a user.")
 	async def rank(self, ctx: commands.Context, member: Optional[discord.Member]):
 		print('rank')
@@ -114,7 +115,8 @@ class Levels(discord.Cog):
 						fill = text_color,
 						radius = 20
 					)
-				background.text((200, 40), str(user.display_name), font = poppins, color = text_color)  # Username placement and coloring
+				background.text((200, 40), str(user.display_name), font = poppins,
+				                color = text_color)  # Username placement and coloring
 				background.rectangle((200, 100), width = 350, height = 2, fill = text_color)
 				background.text(  # XP text data
 					(200, 130),
@@ -164,6 +166,7 @@ class Levels(discord.Cog):
 		except Exception as error:
 			logger.exception(error)
 
+	# noinspection PyTypeChecker
 	@discord.slash_command(name = "leaderboard", description = "Shows the leaderboard.")
 	async def leaderboard(self, ctx, range_num = '10'):
 		logger.info('Leaderboard opened')
