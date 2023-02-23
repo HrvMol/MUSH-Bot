@@ -19,10 +19,10 @@ logger.setLevel('INFO')
 
 
 # BST
-self.bot.eu_srb_start = datetime.strptime("15:00:00", "%H:%M:%S")
-self.bot.eu_srb_end = datetime.strptime("23:00:00", "%H:%M:%S")
-self.bot.us_srb_start = datetime.strptime("02:00:00", "%H:%M:%S")
-self.bot.us_srb_end = datetime.strptime("08:00:00", "%H:%M:%S")
+eu_srb_start = datetime.strptime("15:00:00", "%H:%M:%S")
+eu_srb_end = datetime.strptime("23:00:00", "%H:%M:%S")
+us_srb_start = datetime.strptime("02:00:00", "%H:%M:%S")
+us_srb_end = datetime.strptime("08:00:00", "%H:%M:%S")
 
 class SrbInfo(commands.Cog):
 
