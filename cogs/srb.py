@@ -11,14 +11,14 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 logger.setLevel('INFO')
 
-# GMT
+# BST
 # eu_srb_start = datetime.strptime("14:00:00", "%H:%M:%S")
 # eu_srb_end = datetime.strptime("22:00:00", "%H:%M:%S")
 # us_srb_start = datetime.strptime("01:00:00", "%H:%M:%S")
 # us_srb_end = datetime.strptime("07:00:00", "%H:%M:%S")
 
 
-# BST
+# GMT
 eu_srb_start = datetime.strptime("15:00:00", "%H:%M:%S")
 eu_srb_end = datetime.strptime("23:00:00", "%H:%M:%S")
 us_srb_start = datetime.strptime("02:00:00", "%H:%M:%S")
