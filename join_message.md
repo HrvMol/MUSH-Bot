@@ -7,3 +7,6 @@ In order to join, fill out the form below, and please change your nickname in th
 4. How many SRBs will you be able to partake in a week
 5. Have you submitted an application to the squadron in game?
 ```
+
+SRB is mandatory and participation will be monitored.
+Notifications to be on at all times so you can be alerted about SRB.
