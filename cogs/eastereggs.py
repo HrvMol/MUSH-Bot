@@ -1,60 +1,65 @@
-import discord
-from discord.ext import commands
 import random
-
-class EasterEggs(commands.Cog):
-    def __init__(self, bot):
-        self.bot = bot
-
-    @commands.Cog.listener()
-    async def on_ready(self):
-        print("Easter Egg Cog Loaded")
-
-    @commands.Cog.listener()
-    async def on_message(self, ctx):
-        print()
-        if ctx.author != self.bot.user:
-            if ctx.author.id == "407903863778312196":
-                await ctx.channel.send("Not Tornado")
-            if random.randint(0, 2500) == 1:
-                await ctx.channel.send("fuck you")
+import discord
 
 
-    @commands.command(name="best")
-    async def best(self, ctx):
-        await ctx.channel.send("back Boris \nhttps://tinyurl.com/5yrzz5x6")
-        await ctx.message.delete()
+class EasterEggs(discord.Cog):  # Creates a class for the cog that inherits from commands.Cog
+	# this class is used to create a cog, which is a module that can be added to the bot
 
-    @commands.command(name="nephew")
-    async def nephew(self, ctx):
-        await ctx.channel.send("head of dinosaurs \nhttps://tinyurl.com/bdfmkupv")
-        await ctx.message.delete()
+	def __init__(self, bot):  # this is a special method that is called when the cog is loaded
+		self.bot = bot
 
-    @commands.command(name="potatoes")
-    async def potatoes(self, ctx):
-        await ctx.channel.send("POV: you voted Tories \nhttps://tenor.com/view/boom-bomb-car-bomb-explosion-detonate-gif-15743196")
-        await ctx.message.delete()
+	@discord.Cog.listener()  # Adds an event listener to the cog
+	async def on_ready(self):  # Called when the bot is ready
+		print("Easter Egg Cog Loaded")
 
-    @commands.command(name="salty")
-    async def salty(self, ctx):
-        await ctx.channel.send("2 world wars, 1 world cup and one womens Euros \nhttps://tinyurl.com/2m3reh38")
-        await ctx.message.delete()
+	@discord.Cog.listener()  # Adds an event listener to the cog
+	async def on_message(self, ctx):
+		print()
+		if ctx.author != self.bot.user:
+			if ctx.author.id == "407903863778312196":
+				await ctx.channel.send("Not Tornado")
+			if random.randint(0, 2500) == 1:
+				await ctx.channel.send("fuck you")
 
-    #update 1
-    @commands.command(name="russianbias")
-    async def russianbias(self, ctx):
-        await ctx.channel.send("https://tinyurl.com/4e2x43nd")
-        await ctx.message.delete()
+	@discord.slash_command(name = "best")  # Creates a slash command
+	async def best(self, ctx):
+		image = "https://tinyurl.com/5yrzz5x6"
+		await ctx.channel.send("Back Boris")
+		await ctx.channel.send(image)
 
-    @commands.command(name="scottsman")
-    async def scotsman(self, ctx):
-        await ctx.channel.send("https://cdn.discordapp.com/attachments/987513534227316789/1003431507597205584/received_272561204831416.jpeg")
-        await ctx.message.delete()
+	@discord.slash_command(name = "nephew")  # Creates a prefixed command
+	async def nephew(self, ctx):
+		image = "https://tinyurl.com/bdfmkupv"
+		await ctx.channel.send("Head of the dinosaurs")
+		await ctx.channel.send(image)
 
-    @commands.command(name="posh")
-    async def posh(self, ctx):
-        await ctx.channel.send("https://cdn.discordapp.com/attachments/987513534227316789/1005955570991370380/unknown.png")
-        await ctx.message.delete()
-    
-def setup(client):
-    client.add_cog(EasterEggs(client))
+	@discord.slash_command(name = "potatoes")  # Creates a prefixed command
+	async def potatoes(self, ctx):
+		image = "https://tenor.com/view/boom-bomb-car-bomb-explosion-detonate-gif-15743196"
+		await ctx.channel.send("POV: you voted Tories")
+		await ctx.channel.send(image)
+
+	@discord.slash_command(name = "salty")  # Creates a prefixed command
+	async def salty(self, ctx):
+		image = "https://tinyurl.com/2m3reh38"
+		await ctx.channel.send("2 world wars, 1 world cup and 1 women's Euros")
+		await ctx.channel.send(image)
+
+	@discord.slash_command(name = "russianbias")  # Creates a prefixed command
+	async def russianbias(self, ctx):
+		image = "https://tinyurl.com/4e2x43nd"
+		await ctx.channel.send(image)
+
+	@discord.slash_command(name = "scottsman")  # Creates a prefixed command
+	async def scotsman(self, ctx):
+		image = "https://cdn.discordapp.com/attachments/987513534227316789/1003431507597205584/received_272561204831416.jpeg"
+		await ctx.channel.send(image)
+
+	@discord.slash_command(name = "posh")  # Creates a prefixed command
+	async def posh(self, ctx):
+		image = "https://cdn.discordapp.com/attachments/987513534227316789/1005955570991370380/unknown.png"
+		await ctx.channel.send(image)
+
+
+def setup(bot):  # This is called by Pycord to set up the cog
+	bot.add_cog(EasterEggs(bot))  # Adds the cog to the bot

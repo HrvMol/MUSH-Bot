@@ -1,2 +1,5 @@
 *.log
 levels.json
+*.env
+*.pyc
+.env

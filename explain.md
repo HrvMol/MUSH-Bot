@@ -1,25 +1,15 @@
 SRB is an 8 vs 8 version of ground RB with a few other changes.
 
-```
 - You only get 1 spawn in SRB. No respawning.
 - Each team can spawn a maximum of 4 aircraft.
 - Only bomber aircraft get air spawns. This makes bombers very powerful.
 - Ground units can only detect friendly aircraft within 1 kilometer, and vice versa.
-```
-The schedule for SRB is as follows:
 
-```
-__EU__
-GMT: 14:00 - 22:00
-MSK: 17:00 - 01:00
-CET: 15:00 - 23:00
-BWT: 14:00 - 22:00
+The schedule for SRB is as follows in your time:  
+EU  
+<t:1667656800:t> - <t:1667685600:t>
 
-__US__
-GMT: 01:00 - 07:00
-BST: 02:00 - 08:00
-BRT: 22:00 - 04:00
-EST: 21:00 - 03:00
-PST: 17:00 - 23:00
-```
+US  
+<t:1667696400:t> - <t:1667631600:t>
+
 We will call through the #srb-signup channel. Keep your notifications on.
