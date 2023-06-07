@@ -1,2 +1,5 @@
 *.log
 levels.json
+.vscode/settings.json
+.env
+*.pyc
